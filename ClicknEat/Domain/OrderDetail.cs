@@ -12,19 +12,13 @@ namespace ClicknEat.Domain
         [Key]
         public Guid Id { get; set; }
 
-        public Guid OrderId { get; set; }
-
-        public Guid ProductId { get; set; }
-
         public int Quantity { get; set; }
 
         [Required]
         public int Price { get; set; }
 
-        [ForeignKey(nameof(ProductId))]
         public Product Product { get; set; }
 
-        [ForeignKey(nameof(OrderId))]
         public Order Order { get; set; }
     }
 }

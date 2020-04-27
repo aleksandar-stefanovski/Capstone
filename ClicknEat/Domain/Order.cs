@@ -14,8 +14,6 @@ namespace ClicknEat.Domain
         [Key]
         public Guid Id { get; set; }
 
-        public string UserId { get; set; }
-
         [Required]
         [StringLength(120, MinimumLength = 4)]
         public string FullName { get; set; }
@@ -43,7 +41,6 @@ namespace ClicknEat.Domain
         [ScaffoldColumn(false)]
         public DateTime OrderPlaced { get; set; }
 
-        [ForeignKey(nameof(UserId))]
         public IdentityUser User { get; set; }
 
         public List<OrderDetail> OrderDetails { get; set; }

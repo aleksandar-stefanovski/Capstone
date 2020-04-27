@@ -5,6 +5,11 @@
     <UserSecretsId>aspnet-ClicknEat-13FA4D76-D5BD-4A26-BA08-D52E15F60DBE</UserSecretsId>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Data\Migrations\20200427212450_Implement Domain.cs" />
+    <Compile Remove="Data\Migrations\20200427212450_Implement Domain.Designer.cs" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="9.0.0" />

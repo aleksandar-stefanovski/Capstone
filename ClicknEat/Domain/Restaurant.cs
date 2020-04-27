@@ -12,8 +12,6 @@ namespace ClicknEat.Domain
         [Key]
         public Guid Id { get; set; }
 
-        public Guid RestaurantId { get; set; }
-
         [Required]
         [StringLength(80, MinimumLength = 2)]
         public string RestaurantName { get; set; }
@@ -22,7 +20,6 @@ namespace ClicknEat.Domain
         [DataType(DataType.Text)]
         public string Description { get; set; }
 
-        [ForeignKey(nameof(RestaurantId))]
         public RestaurantCategory RestaurantCategory { get; set; }
 
         public List<ProductCategory> ProductCategories { get; set; }

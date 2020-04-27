@@ -12,13 +12,13 @@ namespace ClicknEat.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    UserId = table.Column<string>(nullable: true),
                     FullName = table.Column<string>(maxLength: 120, nullable: false),
                     Address = table.Column<string>(maxLength: 100, nullable: false),
                     PhoneNumber = table.Column<string>(maxLength: 16, nullable: false),
                     Email = table.Column<string>(maxLength: 60, nullable: false),
                     OrderTotal = table.Column<int>(nullable: false),
-                    OrderPlaced = table.Column<DateTime>(nullable: false)
+                    OrderPlaced = table.Column<DateTime>(nullable: false),
+                    UserId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -59,19 +59,19 @@ namespace ClicknEat.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    RestaurantId = table.Column<Guid>(nullable: false),
                     RestaurantName = table.Column<string>(maxLength: 80, nullable: false),
-                    Description = table.Column<string>(nullable: false)
+                    Description = table.Column<string>(nullable: false),
+                    RestaurantCategoryId = table.Column<Guid>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Restaurants", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Restaurants_RestaurantCategories_RestaurantId",
-                        column: x => x.RestaurantId,
+                        name: "FK_Restaurants_RestaurantCategories_RestaurantCategoryId",
+                        column: x => x.RestaurantCategoryId,
                         principalTable: "RestaurantCategories",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -79,8 +79,8 @@ namespace ClicknEat.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    RestaurantId = table.Column<Guid>(nullable: false),
-                    ProductCategoryName = table.Column<string>(nullable: false)
+                    ProductCategoryName = table.Column<string>(nullable: false),
+                    RestaurantId = table.Column<Guid>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -90,7 +90,7 @@ namespace ClicknEat.Data.Migrations
                         column: x => x.RestaurantId,
                         principalTable: "Restaurants",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -98,12 +98,12 @@ namespace ClicknEat.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    ProductCategoryId = table.Column<Guid>(nullable: false),
-                    RestaurantId = table.Column<Guid>(nullable: false),
                     ProductName = table.Column<string>(maxLength: 80, nullable: false),
                     Description = table.Column<string>(nullable: false),
                     Price = table.Column<int>(nullable: false),
-                    ImagePath = table.Column<string>(nullable: true)
+                    ImagePath = table.Column<string>(nullable: true),
+                    ProductCategoryId = table.Column<Guid>(nullable: true),
+                    RestaurantId = table.Column<Guid>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -113,13 +113,13 @@ namespace ClicknEat.Data.Migrations
                         column: x => x.ProductCategoryId,
                         principalTable: "ProductCategories",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Products_Restaurants_RestaurantId",
                         column: x => x.RestaurantId,
                         principalTable: "Restaurants",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -127,10 +127,10 @@ namespace ClicknEat.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    OrderId = table.Column<Guid>(nullable: false),
-                    ProductId = table.Column<Guid>(nullable: false),
                     Quantity = table.Column<int>(nullable: false),
-                    Price = table.Column<int>(nullable: false)
+                    Price = table.Column<int>(nullable: false),
+                    ProductId = table.Column<Guid>(nullable: true),
+                    OrderId = table.Column<Guid>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -140,13 +140,13 @@ namespace ClicknEat.Data.Migrations
                         column: x => x.OrderId,
                         principalTable: "Orders",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_OrderDetails_Products_ProductId",
                         column: x => x.ProductId,
                         principalTable: "Products",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -154,25 +154,25 @@ namespace ClicknEat.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    ProductId = table.Column<Guid>(nullable: false),
-                    ShoppingCartId = table.Column<Guid>(nullable: false),
-                    Quantity = table.Column<int>(nullable: false)
+                    Quantity = table.Column<int>(nullable: false),
+                    GetShoppingCartId = table.Column<Guid>(nullable: true),
+                    ProductId = table.Column<Guid>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ShoppingCartItems", x => x.Id);
                     table.ForeignKey(
+                        name: "FK_ShoppingCartItems_ShoppingCart_GetShoppingCartId",
+                        column: x => x.GetShoppingCartId,
+                        principalTable: "ShoppingCart",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
                         name: "FK_ShoppingCartItems_Products_ProductId",
                         column: x => x.ProductId,
                         principalTable: "Products",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ShoppingCartItems_ShoppingCart_ShoppingCartId",
-                        column: x => x.ShoppingCartId,
-                        principalTable: "ShoppingCart",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
@@ -206,19 +206,19 @@ namespace ClicknEat.Data.Migrations
                 column: "RestaurantId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Restaurants_RestaurantId",
+                name: "IX_Restaurants_RestaurantCategoryId",
                 table: "Restaurants",
-                column: "RestaurantId");
+                column: "RestaurantCategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ShoppingCartItems_GetShoppingCartId",
+                table: "ShoppingCartItems",
+                column: "GetShoppingCartId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ShoppingCartItems_ProductId",
                 table: "ShoppingCartItems",
                 column: "ProductId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ShoppingCartItems_ShoppingCartId",
-                table: "ShoppingCartItems",
-                column: "ShoppingCartId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -233,10 +233,10 @@ namespace ClicknEat.Data.Migrations
                 name: "Orders");
 
             migrationBuilder.DropTable(
-                name: "Products");
+                name: "ShoppingCart");
 
             migrationBuilder.DropTable(
-                name: "ShoppingCart");
+                name: "Products");
 
             migrationBuilder.DropTable(
                 name: "ProductCategories");
