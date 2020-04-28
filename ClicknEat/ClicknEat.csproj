@@ -24,10 +24,4 @@
     <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="5.3.3" />
   </ItemGroup>
 
-
-  <ItemGroup>
-    <Folder Include="Contracts\V1\Responses\" />
-    <Folder Include="Contracts\V1\Requests\" />
-  </ItemGroup>
-
 </Project>

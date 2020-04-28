@@ -43,6 +43,6 @@ namespace ClicknEat.Domain
 
         public IdentityUser User { get; set; }
 
-        public List<OrderDetail> OrderDetails { get; set; }
+        public IEnumerable<OrderDetail> OrderDetails { get; set; }
     }
 }

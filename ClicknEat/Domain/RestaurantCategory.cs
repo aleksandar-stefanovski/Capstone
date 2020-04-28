@@ -16,6 +16,6 @@ namespace ClicknEat.Domain
         [StringLength(60)]
         public string RestaurantCategoryName { get; set; }
 
-        public List<Restaurant> Restaurants { get; set; }
+        public IEnumerable<Restaurant> Restaurants { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using ClicknEat.Data;
+using ClicknEat.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -17,11 +18,13 @@ namespace ClicknEat.Installers
         {
             services.AddAutoMapper(typeof(Startup));
 
-            services.AddDbContext<DataContext>(options =>
+            services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<DataContext>();
+                .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            services.AddScoped<IRestaurantService, RestaurantService>();
         }
     }
 }

@@ -22,8 +22,8 @@ namespace ClicknEat.Domain
 
         public RestaurantCategory RestaurantCategory { get; set; }
 
-        public List<ProductCategory> ProductCategories { get; set; }
+        public IEnumerable<ProductCategory> ProductCategories { get; set; }
 
-        public List<Product> Products { get; set; }
+        public IEnumerable<Product> Products { get; set; }
     }
 }

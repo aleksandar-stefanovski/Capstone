@@ -13,7 +13,15 @@ namespace ClicknEat.Contracts.V1
 
         public static class Restaurants
         {
-            public const string GetAll = Base + "/restaurants";
+            public const string GetAll = Base + "/Restaurants";
+
+            public const string Get = Base + "/Restaurant/{restaurantId}";
+
+            public const string Create = Base + "/Restaurants";
+
+            public const string Update = Base + "/Restaurant/{restaurantId}";
+
+            public const string Delete = Base + "/Restaurant/{restaurantId}";
         }
     }
 }

@@ -7,19 +7,19 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ClicknEat.Data
 {
-    public class DataContext : IdentityDbContext
+    public class ApplicationDbContext : IdentityDbContext
     {
-        public DataContext(DbContextOptions<DataContext> options)
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
         }
 
-        DbSet<Restaurant> Restaurants { get; set; }
-        DbSet<RestaurantCategory> RestaurantCategories { get; set; }
-        DbSet<Product> Products { get; set; }
-        DbSet<ProductCategory> ProductCategories { get; set; }
-        DbSet<ShoppingCartItem> ShoppingCartItems { get; set; }
-        DbSet<Order> Orders { get; set; }
-        DbSet<OrderDetail> OrderDetails { get; set; }
+       public DbSet<Restaurant> Restaurants { get; set; }
+       public DbSet<RestaurantCategory> RestaurantCategories { get; set; }
+       public DbSet<Product> Products { get; set; }
+       public DbSet<ProductCategory> ProductCategories { get; set; }
+       public DbSet<ShoppingCartItem> ShoppingCartItems { get; set; }
+       public DbSet<Order> Orders { get; set; }
+       public  DbSet<OrderDetail> OrderDetails { get; set; }
     }
 }

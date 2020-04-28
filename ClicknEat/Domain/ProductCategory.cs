@@ -17,6 +17,6 @@ namespace ClicknEat.Domain
 
         public Restaurant Restaurant { get; set; }
 
-        public List<Product> Products { get; set; }
+        public IEnumerable<Product> Products { get; set; }
     }
 }
