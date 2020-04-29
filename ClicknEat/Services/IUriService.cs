@@ -7,6 +7,6 @@ namespace ClicknEat.Services
 {
     public interface IUriService
     {
-        Uri GetPostUri(string restaurantId);
+        Uri GetRestaurantUri(string restaurantId);
     }
 }

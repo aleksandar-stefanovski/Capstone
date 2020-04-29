@@ -20,14 +20,14 @@ namespace ClicknEat.Controllers.V1
     {
         private readonly IRestaurantService _restaurantService;
         private readonly IMapper _mapper;
-        private readonly IUriService _uriService;
+        /*private readonly IUriService _uriService;*/
 
 
-        public RestaurantController(IRestaurantService restaurantService, IMapper mapper, IUriService uriService)
+        public RestaurantController(IRestaurantService restaurantService, IMapper mapper)
         {
             _restaurantService = restaurantService;
             _mapper = mapper;
-            _uriService = uriService;
+            /*_uriService = uriService;*/
         }
 
         [HttpGet(ApiRoutes.Restaurants.GetAll)]
@@ -59,17 +59,17 @@ namespace ClicknEat.Controllers.V1
             {
                 Id = newRestaurantId,
                 RestaurantName = createRestaurantRequest.RestaurantName,
-                Description = createRestaurantRequest.Description,
-                ProductCategories = createRestaurantRequest.ProductCategories,
-                Products = createRestaurantRequest.Products
+                Description = createRestaurantRequest.Description
             };
 
             await _restaurantService.CreateRestaurantAsync(restaurant);
 
-            var locationUri = _uriService.GetPostUri(restaurant.Id.ToString());
-            return Created(locationUri, new Response<RestaurantResponse>(_mapper.Map<RestaurantResponse>(restaurant)));
+            /*var locationUri = _uriService.GetRestaurantUri(restaurant.Id.ToString());
+            return Created(locationUri, new Response<RestaurantResponse>(_mapper.Map<RestaurantResponse>(restaurant)));*/
+
+            return Ok(new Response<RestaurantResponse>(_mapper.Map<RestaurantResponse>(restaurant)));
         }
- 
+
 
     }
 

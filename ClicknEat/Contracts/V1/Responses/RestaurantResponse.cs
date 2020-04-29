@@ -14,10 +14,10 @@ namespace ClicknEat.Contracts.V1.Responses
 
         public string Description { get; set; }
 
-        public Guid RestaurantCategoryId { get; set; }
+        /*public Guid RestaurantCategoryId { get; set; }*/
 
-        public List<ProductCategory> ProductCategories { get; set; }
+        /*public IEnumerable<ProductCategory> ProductCategories { get; set; }*/
 
-        public List<Product> Products { get; set; }
+       /* public IEnumerable<Product> Products { get; set; }*/
     }
 }

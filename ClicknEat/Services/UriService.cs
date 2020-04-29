@@ -15,7 +15,7 @@ namespace ClicknEat.Services
             _baseUri = baseUri;
         }
 
-        public Uri GetPostUri(string restaurantId)
+        public Uri GetRestaurantUri(string restaurantId)
         {
             return new Uri(_baseUri + ApiRoutes.Restaurants.Get.Replace("{restaurantId}", restaurantId));
         }

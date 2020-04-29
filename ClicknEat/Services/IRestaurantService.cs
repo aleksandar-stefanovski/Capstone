@@ -14,6 +14,5 @@ namespace ClicknEat.Services
         Task<Restaurant> GetRestaurantAsync(Guid restaurantId);
 
         Task<bool> CreateRestaurantAsync(Restaurant restaurant);
-
     }
 }
