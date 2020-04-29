@@ -20,6 +20,8 @@ namespace ClicknEat.Domain
         [DataType(DataType.Text)]
         public string Description { get; set; }
 
+
+        public string Cat { get; set; }
         public RestaurantCategory RestaurantCategory { get; set; }
 
         public IEnumerable<ProductCategory> ProductCategories { get; set; }

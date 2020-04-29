@@ -18,6 +18,6 @@ namespace ClicknEat.Contracts.V1.Responses
 
         /*public IEnumerable<ProductCategory> ProductCategories { get; set; }*/
 
-       /* public IEnumerable<Product> Products { get; set; }*/
+        /* public IEnumerable<Product> Products { get; set; }*/
     }
 }

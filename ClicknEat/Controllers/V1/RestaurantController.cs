@@ -70,7 +70,30 @@ namespace ClicknEat.Controllers.V1
             return Ok(new Response<RestaurantResponse>(_mapper.Map<RestaurantResponse>(restaurant)));
         }
 
+        [HttpPut(ApiRoutes.Restaurants.Update)]
+        public async Task<IActionResult> UpdateRestaurant([FromRoute] Guid restaurantId, [FromBody] UpdateRestaurantRequest updateRestaurantRequest)
+        {
+            var restaurant = await _restaurantService.GetRestaurantByIdAsync(restaurantId);
+            restaurant.RestaurantName = updateRestaurantRequest.RestaurantName;
+            restaurant.Description = updateRestaurantRequest.Description;
 
+            var updated = await _restaurantService.UpdateRestaurantAsync(restaurant);
+
+            if (updated)
+                return Ok(new Response<RestaurantResponse>(_mapper.Map<RestaurantResponse>(restaurant)));
+
+                return NotFound();
+        }
+
+        [HttpDelete(ApiRoutes.Restaurants.Delete)]
+        public async Task<IActionResult> DeteleRestaurant([FromRoute] Guid restaurantId)
+        {
+            var deleted = await _restaurantService.DeleteRestaurantAsync(restaurantId);
+
+            if (deleted)
+                return NoContent();
+
+            return NotFound();
+        }
     }
-
 }

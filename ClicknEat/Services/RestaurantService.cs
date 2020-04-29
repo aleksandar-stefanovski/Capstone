@@ -37,5 +37,32 @@ namespace ClicknEat.Services
             return created > 0;
         }
 
+        public async Task<Restaurant> GetRestaurantByIdAsync(Guid restaurantId)
+        {
+            return await _context.Restaurants.Where(x => x.Id == restaurantId).FirstOrDefaultAsync();
+        }
+
+        public async Task<bool> UpdateRestaurantAsync(Restaurant restaurantToUpdate)
+        {
+            _context.Restaurants.Update(restaurantToUpdate);
+
+            var updated = await _context.SaveChangesAsync();
+
+            return updated > 0;
+        }
+
+        public async Task<bool> DeleteRestaurantAsync(Guid restaurantId)
+        {
+            var restaurant = await GetRestaurantByIdAsync(restaurantId);
+
+            if (restaurant == null)
+                return false;
+
+            _context.Remove(restaurant);
+            var deleted = await _context.SaveChangesAsync();
+
+            return deleted > 0;
+        }
+
     }
 }
