@@ -1,1 +1,1 @@
-Food Delivery Web Service - ClicknEat
+Food Delivery Web API - ClicknEat
