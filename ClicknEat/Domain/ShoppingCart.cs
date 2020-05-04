@@ -11,6 +11,6 @@ namespace ClicknEat.Domain
         [Key]
         public Guid Id { get; set; }
 
-        public IEnumerable<ShoppingCartItem> ShoppingCartItems { get; set; }
+        public ICollection<ShoppingCartItem> ShoppingCartItems { get; set; }
     }
 }

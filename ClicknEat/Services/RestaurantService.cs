@@ -1,4 +1,6 @@
-﻿using ClicknEat.Data;
+﻿using ClicknEat.Contracts.V1.Requests;
+using ClicknEat.Contracts.V1.Responses;
+using ClicknEat.Data;
 using ClicknEat.Domain;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -20,49 +22,73 @@ namespace ClicknEat.Services
 
         public async Task<List<Restaurant>> GetAllAsync()
         {
-            return await  _context.Restaurants.ToListAsync();
+            return await  _context.Restaurants
+                .Include(x => x.RestaurantCategory)
+                .ToListAsync();
         }
 
-        public async Task<Restaurant> GetRestaurantAsync(Guid restaurantId)
+        public async Task<List<Restaurant>> GetRestaurantAsync(Guid restaurantId)
         {
-            return await _context.Restaurants.Where(x => x.Id == restaurantId).FirstOrDefaultAsync();
+            return await _context.Restaurants
+                .Where(x => x.Id == restaurantId)
+                .Include(x => x.Products)
+                .ToListAsync();
         }
 
         public async Task<bool> CreateRestaurantAsync(Restaurant restaurant)
         {
-            await _context.Restaurants.AddAsync(restaurant);
+            await _context.Restaurants
+                .AddAsync(restaurant);
 
-            var created = await _context.SaveChangesAsync();
+            var created = await _context
+                .SaveChangesAsync();
 
             return created > 0;
         }
 
         public async Task<Restaurant> GetRestaurantByIdAsync(Guid restaurantId)
         {
-            return await _context.Restaurants.Where(x => x.Id == restaurantId).FirstOrDefaultAsync();
+            return await _context.Restaurants
+                .Where(x => x.Id == restaurantId)
+                .FirstOrDefaultAsync();
         }
 
         public async Task<bool> UpdateRestaurantAsync(Restaurant restaurantToUpdate)
         {
-            _context.Restaurants.Update(restaurantToUpdate);
+            _context.Restaurants
+                .Update(restaurantToUpdate);
 
-            var updated = await _context.SaveChangesAsync();
+            var updated = await _context
+                .SaveChangesAsync();
 
             return updated > 0;
         }
 
         public async Task<bool> DeleteRestaurantAsync(Guid restaurantId)
         {
-            var restaurant = await GetRestaurantByIdAsync(restaurantId);
+            var restaurant = await _context.Restaurants
+                .Where(x => x.Id == restaurantId)
+                .Include(p => p.Products)
+                .FirstOrDefaultAsync();
 
             if (restaurant == null)
                 return false;
 
-            _context.Remove(restaurant);
-            var deleted = await _context.SaveChangesAsync();
+            if (restaurant.Products
+                .Any(p => p.RestaurantId == restaurantId))
+                return false;
+
+            else if (!restaurant.Products
+                .Any(p => p.RestaurantId == restaurantId)){
+
+                _context
+                    .Remove(restaurant);
+            }
+
+            var deleted = await _context
+                .SaveChangesAsync();
 
             return deleted > 0;
         }
-
     }
 }

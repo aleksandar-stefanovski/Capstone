@@ -12,6 +12,8 @@ namespace ClicknEat.Domain
         [Key]
         public Guid Id { get; set; }
 
+        public Guid? RestaurantId = Guid.Empty;
+
         [Required]
         [StringLength(80, MinimumLength = 2)]
         public string ProductName { get; set; }
@@ -25,11 +27,13 @@ namespace ClicknEat.Domain
 
         public string ImagePath { get; set; }
 
+
         public ProductCategory ProductCategory { get; set; }
 
+        [ForeignKey(nameof(RestaurantId))]
         public Restaurant Restaurant { get; set; }
 
-        public IEnumerable<OrderDetail> OrderDetails { get; set; }
+        public ICollection<OrderDetail> OrderDetails { get; set; }
 
     }
 }

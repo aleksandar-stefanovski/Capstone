@@ -13,6 +13,11 @@ namespace ClicknEat.Mapping
         public MappingProfile()
         {
             CreateMap<Restaurant, RestaurantResponse>();
+            CreateMap<Restaurant, RestaurantProductResponse>();
+
+            CreateMap<RestaurantCategory, RestaurantCategoryResponse>();
+            CreateMap<RestaurantCategory, RestaurantCategoryListResponse>();
+            CreateMap<Product, ProductResponse>();
         }
     }
 }

@@ -1,4 +1,6 @@
 ﻿using ClicknEat.Contracts.V1.Requests;
+using ClicknEat.Contracts.V1.Responses;
+using ClicknEat.Data;
 using ClicknEat.Domain;
 using System;
 using System.Collections.Generic;
@@ -11,7 +13,7 @@ namespace ClicknEat.Services
     {
         Task<List<Restaurant>> GetAllAsync();
 
-        Task<Restaurant> GetRestaurantAsync(Guid restaurantId);
+        Task<List<Restaurant>> GetRestaurantAsync(Guid restaurantId);
 
         Task<bool> CreateRestaurantAsync(Restaurant restaurant);
 

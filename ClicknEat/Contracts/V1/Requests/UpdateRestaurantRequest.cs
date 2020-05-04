@@ -11,8 +11,10 @@ namespace ClicknEat.Contracts.V1.Requests
 
         public string Description { get; set; }
 
-        /*   public IEnumerable<ProductCategory> ProductCategories { get; set; }
+        public CategoryToRestaurantRequest CategoryToRestaurantRequest { get; set; }
 
-           public IEnumerable<Product> Products { get; set; }*/
+        /*   public ICollection<ProductCategory> ProductCategories { get; set; }
+
+           public ICollection<Product> Products { get; set; }*/
     }
 }

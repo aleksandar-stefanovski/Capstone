@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -20,12 +21,15 @@ namespace ClicknEat.Domain
         [DataType(DataType.Text)]
         public string Description { get; set; }
 
-
-        public string Cat { get; set; }
         public RestaurantCategory RestaurantCategory { get; set; }
 
-        public IEnumerable<ProductCategory> ProductCategories { get; set; }
+        public ICollection<ProductCategory> ProductCategories { get; set; }
 
-        public IEnumerable<Product> Products { get; set; }
+        public ICollection<Product> Products { get; set; }
+
+        public Restaurant()
+        {
+            Products = new Collection<Product>();
+        }
     }
 }

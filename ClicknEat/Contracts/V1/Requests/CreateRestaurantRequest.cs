@@ -1,6 +1,9 @@
-﻿using ClicknEat.Domain;
+﻿using ClicknEat.Contracts.V1.Responses;
+using ClicknEat.Domain;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -12,9 +15,10 @@ namespace ClicknEat.Contracts.V1.Requests
 
         public string Description { get; set; }
 
+        public CategoryToRestaurantRequest CategoryToRestaurantRequest { get; set; }
 
-        /*   public IEnumerable<ProductCategory> ProductCategories { get; set; }
+        /*public ICollection<ProductResponse> Products { get; set; }*/
 
-           public IEnumerable<Product> Products { get; set; }*/
+        /*public ICollection<ProductCategory> ProductCategories { get; set; } */
     }
 }

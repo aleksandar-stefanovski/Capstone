@@ -1,6 +1,7 @@
 ﻿using ClicknEat.Domain;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -14,10 +15,6 @@ namespace ClicknEat.Contracts.V1.Responses
 
         public string Description { get; set; }
 
-        /*public Guid RestaurantCategoryId { get; set; }*/
-
-        /*public IEnumerable<ProductCategory> ProductCategories { get; set; }*/
-
-        /* public IEnumerable<Product> Products { get; set; }*/
+        public RestaurantCategoryResponse RestaurantCategory { get; set; }
     }
 }

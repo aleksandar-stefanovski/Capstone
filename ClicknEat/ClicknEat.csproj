@@ -8,12 +8,15 @@
   <ItemGroup>
     <Compile Remove="Data\Migrations\20200427212450_Implement Domain.cs" />
     <Compile Remove="Data\Migrations\20200427212450_Implement Domain.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200503114141_test restaurant-cat 02.cs" />
+    <Compile Remove="Data\Migrations\20200503114141_test restaurant-cat 02.Designer.cs" />
   </ItemGroup>
 
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="9.0.0" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
+    <PackageReference Include="EntityFramework" Version="6.4.0" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.2" />

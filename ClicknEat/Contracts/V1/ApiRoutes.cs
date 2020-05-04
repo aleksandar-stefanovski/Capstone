@@ -17,11 +17,50 @@ namespace ClicknEat.Contracts.V1
 
             public const string Get = Base + "/Restaurant/{restaurantId}";
 
-            public const string Create = Base + "/Restaurants";
+            public const string Create = Base + "/CreateRestaurant";
 
             public const string Update = Base + "/Restaurant/{restaurantId}";
 
             public const string Delete = Base + "/Restaurant/{restaurantId}";
+        }
+
+        public static class RestaurantsCategories
+        {
+            public const string GetAll = Base + "/RestaurantsCategories";
+
+            public const string Get = Base + "/RestaurantCategory/RestaurantCategory/{restaurantCategoryId}";
+
+            public const string Create = Base + "/CreateRestaurantsCategory";
+
+            public const string Update = Base + "/RestaurantCategory/{restaurantCategoryId}";
+
+            public const string Delete = Base + "/RestaurantCategory/{restaurantCategoryId}";
+        }
+
+        public static class Products
+        {
+            public const string GetAll = Base + "/Restaurant/{restaurantId}/Products";
+
+            public const string Get = Base + "/Restaurant/{restaurantId}/Product/{productId}";
+
+            public const string Create = Base + "/Restaurant/{restaurantId}/CreateProduct";
+
+            public const string Update = Base + "/Restaurant/{restaurantId}/UpdateProduct/{productId}";
+
+            public const string Delete = Base + "/Restaurant/{restaurantId}/DeleteProduct/{productId}";
+        }
+
+        public static class ProductsCategories
+        {
+            public const string GetAll = Base + "/Restaurant/{restaurantId}/ProductsCategories";
+
+            public const string Get = Base + "/Restaurant/{restaurantId}/ProductCategory/{productCategoryId}";
+
+            public const string Create = Base + "/Restaurant/{restaurantId}/CreateProductCategory";
+
+            public const string Update = Base + "/ProductCategory/UpdateProductCategory/{productCategoryId}";
+
+            public const string Delete = Base + "/ProductCategory/DeleteProductCategory/{productCategoryId}";
         }
     }
 }

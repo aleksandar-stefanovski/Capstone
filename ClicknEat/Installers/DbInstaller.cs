@@ -25,6 +25,8 @@ namespace ClicknEat.Installers
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddScoped<IRestaurantService, RestaurantService>();
+            services.AddScoped<IRestaurantCategoryService, RestaurantCategoryService>();
+            services.AddScoped<IProductService, ProductService>();
         }
     }
 }
