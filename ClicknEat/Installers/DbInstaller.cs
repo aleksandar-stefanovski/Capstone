@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using ClicknEat.Data;
 using ClicknEat.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -27,6 +28,11 @@ namespace ClicknEat.Installers
             services.AddScoped<IRestaurantService, RestaurantService>();
             services.AddScoped<IRestaurantCategoryService, RestaurantCategoryService>();
             services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<IProductCategoryService, ProductCategoryService>();
+            services.AddScoped<IIdentityService, IdentityService>();
+
+            /*services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();*/
+            /*services.AddScoped<IShoppingCartService, ShoppingCartService>();*/
         }
     }
 }

@@ -19,9 +19,9 @@ namespace ClicknEat.Contracts.V1
 
             public const string Create = Base + "/CreateRestaurant";
 
-            public const string Update = Base + "/Restaurant/{restaurantId}";
+            public const string Update = Base + "/Restaurant/UpdateRestaurant/{restaurantId}";
 
-            public const string Delete = Base + "/Restaurant/{restaurantId}";
+            public const string Delete = Base + "/Restaurant/DeleteRestaurant/{restaurantId}";
         }
 
         public static class RestaurantsCategories
@@ -32,9 +32,9 @@ namespace ClicknEat.Contracts.V1
 
             public const string Create = Base + "/CreateRestaurantsCategory";
 
-            public const string Update = Base + "/RestaurantCategory/{restaurantCategoryId}";
+            public const string Update = Base + "/RestaurantCategory/UpdateRestaurantCategory/{restaurantCategoryId}";
 
-            public const string Delete = Base + "/RestaurantCategory/{restaurantCategoryId}";
+            public const string Delete = Base + "/RestaurantCategory/DeleteRestaurantCategory/{restaurantCategoryId}";
         }
 
         public static class Products
@@ -58,9 +58,31 @@ namespace ClicknEat.Contracts.V1
 
             public const string Create = Base + "/Restaurant/{restaurantId}/CreateProductCategory";
 
-            public const string Update = Base + "/ProductCategory/UpdateProductCategory/{productCategoryId}";
+            public const string Update = Base + "/Restaurant/{restaurantId}UpdateProductCategory/{productCategoryId}";
 
-            public const string Delete = Base + "/ProductCategory/DeleteProductCategory/{productCategoryId}";
+            public const string Delete = Base + "/Restaurant/{restaurantId}/DeleteProductCategory/{productCategoryId}";
+        }
+
+        public static class ShoppingCart
+        {
+            public const string Route = Base + "/[controller]";
+
+            public const string GetAll = Base + "";
+
+            public const string Get = Base + "/Restaurant/{restaurantId}/ProductCategory/{productCategoryId}";
+
+            public const string Create = Base + "/[controller]";
+
+            public const string Update = Base + "/Restaurant/{restaurantId}UpdateProductCategory/{productCategoryId}";
+
+            public const string Delete = Base + "/Restaurant/{restaurantId}/DeleteProductCategory/{productCategoryId}";
+        }
+
+        public static class Identity 
+        {
+            public const string Login = Base + "/identity/login";
+
+            public const string Register = Base + "/identity/register";
         }
     }
 }
