@@ -80,9 +80,11 @@ namespace ClicknEat.Contracts.V1
 
         public static class Identity 
         {
-            public const string Login = Base + "/identity/login";
+            public const string Login = Base + "/Identity/Login";
 
-            public const string Register = Base + "/identity/register";
+            public const string Register = Base + "/Identity/Register";
+
+            public const string Refresh = Base + "/Identity/Refresh";
         }
     }
 }
