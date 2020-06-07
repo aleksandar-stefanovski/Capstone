@@ -40,8 +40,6 @@ namespace ClicknEat.Domain
         [ScaffoldColumn(false)]
         public DateTime OrderPlaced { get; set; }
 
-        public IdentityUser User { get; set; }
-
         public ICollection<OrderDetail> OrderDetails { get; set; }
     }
 }

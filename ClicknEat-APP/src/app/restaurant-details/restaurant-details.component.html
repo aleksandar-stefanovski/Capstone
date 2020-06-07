@@ -1,0 +1,10 @@
+<p>restaurant-details works!</p>
+<div class="restaurant" *ngFor="let res of data">
+    <p>{{ res.restaurantName }}</p>
+    <p> {{ res.description }} </p>
+    <p> {{ res.productCategories.id }} </p>
+
+    <div class="restaurant" *ngFor="let i of res.productCategories">
+        <p>{{ i.productCategoryName }}</p>
+    </div>
+</div>

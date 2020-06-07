@@ -20,7 +20,7 @@ namespace ClicknEat.Services
         public async Task<List<Product>> GetAllAsync(Guid restaurantId)
         {
             return await _context.Products
-                .Where(x => x.Restaurant.Id == restaurantId)
+                .Where(x => x.Restaurant.Id == restaurantId).Include(c => c.ProductCategory)
                 .ToListAsync();
         }
 

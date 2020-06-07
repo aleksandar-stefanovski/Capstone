@@ -7,7 +7,10 @@ using ClicknEat.Contracts.V1;
 using ClicknEat.Contracts.V1.Requests;
 using ClicknEat.Contracts.V1.Responses;
 using ClicknEat.Domain;
+using ClicknEat.Extensions;
 using ClicknEat.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -33,7 +36,13 @@ namespace ClicknEat.Controllers.V1
             var productCategories = await _productCategoryService
                 .GetAllAsync(restaurantId);
 
-            return Ok(_mapper.Map<List<ProductCategory>, List<ProductCategoryResponse>>(productCategories));
+            foreach(var item in productCategories)
+            {
+                if(item.RestaurantId != null && item.RestaurantId == restaurantId)
+                    return Ok(_mapper.Map<List<ProductCategory>, List<ProductCategoryResponse>>(productCategories));
+            }
+
+            return NotFound();
         }
 
         [HttpGet(ApiRoutes.ProductsCategories.Get)]
@@ -54,14 +63,17 @@ namespace ClicknEat.Controllers.V1
             return NotFound();
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
         [HttpPost(ApiRoutes.ProductsCategories.Create)]
-        public async Task<IActionResult> CreateProductCategory([FromBody] CreateProductCategoryRequest createProductCategoryRequest)
+        public async Task<IActionResult> CreateProductCategory([FromRoute] Guid restaurantId, [FromBody] CreateProductCategoryRequest createProductCategoryRequest)
         {
             var newProductCategoryId = new Guid();
+
             var productCategory = new ProductCategory
             {
                 Id = newProductCategoryId,
-                ProductCategoryName = createProductCategoryRequest.ProductCategoryName
+                ProductCategoryName = createProductCategoryRequest.ProductCategoryName,
+                RestaurantId = restaurantId
             };
 
             await _productCategoryService
@@ -73,6 +85,7 @@ namespace ClicknEat.Controllers.V1
             return Ok(new Response<ProductCategoryResponse>(_mapper.Map<ProductCategoryResponse>(productCategory)));
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
         [HttpPut(ApiRoutes.ProductsCategories.Update)]
         public async Task<IActionResult> UpdateProductCategory([FromRoute] Guid restaurantId, [FromRoute] Guid productCategoryId, [FromBody] UpdateProductCategoryRequest updateProductCategoryRequest)
         {
@@ -93,6 +106,7 @@ namespace ClicknEat.Controllers.V1
             return NotFound();
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
         [HttpDelete(ApiRoutes.ProductsCategories.Delete)]
         public async Task<IActionResult> DeteleProductCategory([FromRoute] Guid restaurantId, [FromRoute] Guid productCategoryId)
         {
@@ -102,7 +116,7 @@ namespace ClicknEat.Controllers.V1
             if (deleted)
                 return NoContent();
 
-            return NotFound();
+            return BadRequest();
         }
     }
 }

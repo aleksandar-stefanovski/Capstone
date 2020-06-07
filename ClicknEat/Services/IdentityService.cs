@@ -52,7 +52,8 @@ namespace ClicknEat.Services
                 UserName = email
             };
 
-            var createdUser = await _userManager.CreateAsync(newUser, password);
+            var createdUser = await _userManager
+                .CreateAsync(newUser, password);
 
             /*await _userManager
              * .AddToRoleAsync(newUser, "Admin");*/
@@ -147,7 +148,7 @@ namespace ClicknEat.Services
                 return new AuthenticationResult { Errors = new[] { "This refresh token has been used" } };
             }
 
-            if (storedRefreshToken.JwtId !=  jti)
+            if (storedRefreshToken.JwtId != jti)
             {
                 return new AuthenticationResult { Errors = new[] { "This refresh token does not match this JWT" } };
             }

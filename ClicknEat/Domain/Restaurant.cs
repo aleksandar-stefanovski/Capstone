@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
@@ -29,6 +30,7 @@ namespace ClicknEat.Domain
 
         public Restaurant()
         {
+            ProductCategories = new Collection<ProductCategory>();
             Products = new Collection<Product>();
         }
     }

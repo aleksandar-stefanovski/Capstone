@@ -20,9 +20,17 @@ namespace ClicknEat.Services
             _context = context;
         }
 
-        public async Task<List<Restaurant>> GetAllAsync()
+        public async Task<List<Restaurant>> GetAllAsync(string restaurantName)
         {
-            return await  _context.Restaurants
+            var query = _context.Restaurants.AsQueryable();
+
+            if(!string.IsNullOrEmpty(restaurantName))
+            {
+                query = query
+                    .Where(x => x.RestaurantName == restaurantName);
+            }
+
+            return await  query
                 .Include(x => x.RestaurantCategory)
                 .ToListAsync();
         }
@@ -31,7 +39,8 @@ namespace ClicknEat.Services
         {
             return await _context.Restaurants
                 .Where(x => x.Id == restaurantId)
-                .Include(x => x.Products)
+                .Include(c => c.ProductCategories)
+                .ThenInclude(p => p.Products)
                 .ToListAsync();
         }
 
@@ -90,5 +99,24 @@ namespace ClicknEat.Services
 
             return deleted > 0;
         }
+
+       /* public async Task<bool> UserOwnsRestaurantAsync(Guid restaurantId, string userId)
+        {
+            var restaurant = await _context.Restaurants
+                .AsNoTracking()
+                .SingleOrDefaultAsync(x => x.Id == restaurantId);
+
+            if(restaurant == null)
+            {
+                return false;
+            }
+
+            if (restaurant.UserId != userId)
+            {
+                return false;
+            }
+
+            return true;
+        } */
     }
 }

@@ -11,7 +11,7 @@ namespace ClicknEat.Services
 {
     public interface IRestaurantService
     {
-        Task<List<Restaurant>> GetAllAsync();
+        Task<List<Restaurant>> GetAllAsync(string restaurantName);
 
         Task<List<Restaurant>> GetRestaurantAsync(Guid restaurantId);
 
@@ -22,5 +22,7 @@ namespace ClicknEat.Services
         Task<bool> UpdateRestaurantAsync(Restaurant restaurantToUpdate);
 
         Task<bool> DeleteRestaurantAsync(Guid restaurantId);
+
+        /*Task<bool> UserOwnsRestaurantAsync(Guid restaurantId, string userId);*/
     }
 }

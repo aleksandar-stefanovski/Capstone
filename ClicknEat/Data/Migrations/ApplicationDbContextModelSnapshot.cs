@@ -15,7 +15,7 @@ namespace ClicknEat.Data.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.2")
+                .HasAnnotation("ProductVersion", "3.1.4")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -51,12 +51,7 @@ namespace ClicknEat.Data.Migrations
                         .HasColumnType("nvarchar(16)")
                         .HasMaxLength(16);
 
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Orders");
                 });
@@ -144,6 +139,37 @@ namespace ClicknEat.Data.Migrations
                     b.ToTable("ProductCategories");
                 });
 
+            modelBuilder.Entity("ClicknEat.Domain.RefreshToken", b =>
+                {
+                    b.Property<string>("Token")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("ExpiryDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("Invalidated")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("JwtId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Used")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Token");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("RefreshTokens");
+                });
+
             modelBuilder.Entity("ClicknEat.Domain.Restaurant", b =>
                 {
                     b.Property<Guid>("Id")
@@ -191,7 +217,12 @@ namespace ClicknEat.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("ShoppingCart");
                 });
@@ -202,20 +233,20 @@ namespace ClicknEat.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("GetShoppingCartId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<Guid?>("ProductId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
+                    b.Property<Guid>("ShoppingCartId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("GetShoppingCartId");
-
                     b.HasIndex("ProductId");
+
+                    b.HasIndex("ShoppingCartId");
 
                     b.ToTable("ShoppingCartItems");
                 });
@@ -420,13 +451,6 @@ namespace ClicknEat.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("ClicknEat.Domain.Order", b =>
-                {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
-                });
-
             modelBuilder.Entity("ClicknEat.Domain.OrderDetail", b =>
                 {
                     b.HasOne("ClicknEat.Domain.Order", "Order")
@@ -456,6 +480,13 @@ namespace ClicknEat.Data.Migrations
                         .HasForeignKey("RestaurantId");
                 });
 
+            modelBuilder.Entity("ClicknEat.Domain.RefreshToken", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+                });
+
             modelBuilder.Entity("ClicknEat.Domain.Restaurant", b =>
                 {
                     b.HasOne("ClicknEat.Domain.RestaurantCategory", "RestaurantCategory")
@@ -463,15 +494,24 @@ namespace ClicknEat.Data.Migrations
                         .HasForeignKey("RestaurantCategoryId");
                 });
 
+            modelBuilder.Entity("ClicknEat.Domain.ShoppingCart", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+                });
+
             modelBuilder.Entity("ClicknEat.Domain.ShoppingCartItem", b =>
                 {
-                    b.HasOne("ClicknEat.Domain.ShoppingCart", "GetShoppingCart")
-                        .WithMany("ShoppingCartItems")
-                        .HasForeignKey("GetShoppingCartId");
-
                     b.HasOne("ClicknEat.Domain.Product", "Product")
-                        .WithMany()
+                        .WithMany("ShoppingCartItems")
                         .HasForeignKey("ProductId");
+
+                    b.HasOne("ClicknEat.Domain.ShoppingCart", "ShoppingCart")
+                        .WithMany("ShoppingCartItems")
+                        .HasForeignKey("ShoppingCartId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

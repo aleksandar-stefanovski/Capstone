@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
@@ -13,9 +14,12 @@ namespace ClicknEat.Domain
         [Key]
         public Guid Id { get; set; }
 
+        public Guid? RestaurantId = Guid.Empty;
+
         [Required]
         public string ProductCategoryName { get; set; }
 
+        [ForeignKey(nameof(RestaurantId))]
         public Restaurant Restaurant { get; set; }
 
         public ICollection<Product> Products { get; set; }

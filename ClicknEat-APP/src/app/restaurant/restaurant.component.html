@@ -1,2 +1,6 @@
-<p>restaurant works!</p>
-
+<p>restaurant list!</p>
+<div class="restaurants" *ngFor="let res of restaurants">
+    <p> {{ res.restaurantName }} </p>
+    <p>{{ res.description }}</p>
+    <a [routerLink]="['/restaurant-details/' + res.id]">restaurant</a>
+</div>

@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -27,13 +29,20 @@ namespace ClicknEat.Domain
 
         public string ImagePath { get; set; }
 
-
         public ProductCategory ProductCategory { get; set; }
 
         [ForeignKey(nameof(RestaurantId))]
         public Restaurant Restaurant { get; set; }
 
         public ICollection<OrderDetail> OrderDetails { get; set; }
+
+        public ICollection<ShoppingCartItem> ShoppingCartItems { get; set; }
+
+        public Product()
+        {
+            OrderDetails = new Collection<OrderDetail>();
+            ShoppingCartItems = new Collection<ShoppingCartItem>();
+        }
 
     }
 }
