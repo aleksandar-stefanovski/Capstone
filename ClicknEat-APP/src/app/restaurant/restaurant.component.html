@@ -1,6 +1,14 @@
-<p>restaurant list!</p>
-<div class="restaurants" *ngFor="let res of restaurants">
-    <p> {{ res.restaurantName }} </p>
-    <p>{{ res.description }}</p>
-    <a [routerLink]="['/restaurant-details/' + res.id]">restaurant</a>
+<div class="container">
+    <div class="card-deck">
+        <div class="card" *ngFor="let res of restaurants">
+            <a [routerLink]="['/restaurant-details/' + res.id]">
+                <img class="card-img-top img-fluid" src="assets/logo.png" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">{{ res.restaurantName }}</h5>
+                    <p class="card-text">{{ res.description }}</p>
+                    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                </div>
+            </a>
+        </div>
+    </div>
 </div>

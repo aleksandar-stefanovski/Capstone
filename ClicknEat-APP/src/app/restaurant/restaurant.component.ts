@@ -27,16 +27,16 @@ export class RestaurantComponent implements OnInit {
     });
   }
 
-  add() {
-    this.router.navigate(['/restaurant-add']);
-  }
+  // add() {
+  //   this.router.navigate(['/restaurant-add']);
+  // }
 
-  delete(id: string) {
-    this.restaurantService.deleteRestaurant(id).subscribe(res => {
-      this.getRestaurants();
-    }, (err) => {
-      console.log(err);
-    });
-  }
+  // delete(id: string) {
+  //   this.restaurantService.deleteRestaurant(id).subscribe(res => {
+  //     this.getRestaurants();
+  //   }, (err) => {
+  //     console.log(err);
+  //   });
+  // }
 
 }
