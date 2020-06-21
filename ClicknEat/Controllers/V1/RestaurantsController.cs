@@ -53,17 +53,14 @@ namespace ClicknEat.Controllers.V1
         {
             var restaurant = await _restaurantService.GetRestaurantAsync(restaurantId);
 
-            foreach (var item in restaurant)
-            {
-                if (item.Id != null && item.Id != Guid.Empty && item.Id == restaurantId)
-                {
-                    return Ok(_mapper.Map<List<Restaurant>, List<RestaurantProductResponse>>(restaurant));
-                }
-            }
+           /* foreach (var item in restaurant)
+            {*/
+                if (restaurant.Id != null && restaurant.Id != Guid.Empty && restaurant.Id == restaurantId)
+            return Ok(new Response<RestaurantProductResponse>(_mapper.Map<RestaurantProductResponse>(restaurant)));
 
-            /*return Ok(new Response<RestaurantResponse>(_mapper.Map<RestaurantResponse>(restaurant)));*/
             
             return NotFound();
+                    /*return Ok(_mapper.Map<List<Restaurant>, List<RestaurantProductResponse>>(restaurant));*/
         }
 
         /// <summary>

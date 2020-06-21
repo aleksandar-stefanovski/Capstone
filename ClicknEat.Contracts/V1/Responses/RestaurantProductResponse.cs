@@ -14,11 +14,15 @@ namespace ClicknEat.Contracts.V1.Responses
 
         public string Description { get; set; }
 
-        public ICollection<ProductCategoryListResponse> ProductCategories { get; set; }
+        public RestaurantCategoryResponse RestaurantCategory { get; set; }
+
+        public ICollection<ProductResponse> Products { get; set; }
+        public ICollection<ProductCategoryResponse> ProductCategories { get; set; }
 
         public RestaurantProductResponse()
         {
-            ProductCategories = new Collection<ProductCategoryListResponse>();
+            Products = new Collection<ProductResponse>();
+            ProductCategories = new Collection<ProductCategoryResponse>();
         }
     }
 }

@@ -5,6 +5,7 @@ using ClicknEat.Domain;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -35,13 +36,15 @@ namespace ClicknEat.Services
                 .ToListAsync();
         }
 
-        public async Task<List<Restaurant>> GetRestaurantAsync(Guid restaurantId)
+        public async Task<Restaurant> GetRestaurantAsync(Guid restaurantId)
         {
             return await _context.Restaurants
                 .Where(x => x.Id == restaurantId)
-                .Include(c => c.ProductCategories)
-                .ThenInclude(p => p.Products)
-                .ToListAsync();
+                .Include(rc => rc.RestaurantCategory)
+                .Include(ct => ct.ProductCategories)
+                .Include(p => p.Products)
+                .ThenInclude(c => c.ProductCategory)
+                .FirstOrDefaultAsync();
         }
 
         public async Task<bool> CreateRestaurantAsync(Restaurant restaurant)
