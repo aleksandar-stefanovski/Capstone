@@ -49,6 +49,13 @@ namespace ClicknEat.Services
                 .FirstOrDefaultAsync();
         }
 
+        public async Task<Product> ProductByIdAsync(Guid productId)
+        {
+            return await _context.Products
+                .Where(x => x.Id == productId)
+                .FirstOrDefaultAsync();
+        }
+
         public async Task<bool> UpdateProductAsync(Product productToUpdate)
         {
             _context.Products

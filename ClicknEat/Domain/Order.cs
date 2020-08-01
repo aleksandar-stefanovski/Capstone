@@ -14,6 +14,11 @@ namespace ClicknEat.Domain
         [Key]
         public Guid Id { get; set; }
 
+        public string UserId { get; set; }
+
+        [ForeignKey(nameof(UserId))]
+        public IdentityUser User { get; set; }
+
         [Required]
         [StringLength(120, MinimumLength = 4)]
         public string FullName { get; set; }

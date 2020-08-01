@@ -1,4 +1,4 @@
-﻿using ClicknEat.Contracts.V1;
+﻿/*using ClicknEat.Contracts.V1;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +8,7 @@ namespace ClicknEat.Services
 {
     public class UriService : IUriService
     {
-        private readonly string _baseUri;
+*//*        private readonly string _baseUri;
 
         public UriService(string baseUri)
         {
@@ -18,7 +18,13 @@ namespace ClicknEat.Services
         public Uri GetRestaurantUri(string restaurantId)
         {
             return new Uri(_baseUri + ApiRoutes.Restaurants.Get.Replace("{restaurantId}", restaurantId));
-        }
+        } 
+
+        public Uri GetCartUri(string cartId)
+        {
+            return new Uri(_baseUri + ApiRoutes.Cart.Get.Replace("{cartId}", cartId));
+        }*//*
 
     }
 }
+*/

@@ -69,12 +69,27 @@ namespace ClicknEat.Contracts.V1
         {
             public const string Route = Base + "/[controller]";
 
-            public const string Get = Base + "/{cartId}";
+            public const string Get = "";
 
-            public const string AddToCart = Base + "/{cartId}";
+            public const string AddToCart = "";
 
-            public const string Create = Base + "";
+            public const string RemoveFromCart = "";
 
+            public const string ClearCart = "";
+
+        }
+
+        public static class Order
+        {
+            public const string GetAll = Base + "/Orders";
+
+            public const string GetMine = Base + "/Orders/My-Orders";
+
+            public const string Get = Base + "/Admin/Orders/{orderId}";
+
+            public const string Create = Base + "/Admin/Orders";
+
+            public const string Remove = Base + "/Admin/{orderId}";
         }
 
         public static class Identity 
@@ -84,6 +99,15 @@ namespace ClicknEat.Contracts.V1
             public const string Register = Base + "/Identity/Register";
 
             public const string Refresh = Base + "/Identity/Refresh";
+        }
+
+        public static class Profile
+        {
+            public const string MyProfile = Base + "/Profile/MyProfile";
+
+            public const string GetMine = Base + "/Profile/MyOrders";
+
+            public const string ChangePassword = Base + "/Profile/ChangePassword";
         }
     }
 }

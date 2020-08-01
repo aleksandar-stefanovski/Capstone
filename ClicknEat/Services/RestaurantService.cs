@@ -102,24 +102,5 @@ namespace ClicknEat.Services
 
             return deleted > 0;
         }
-
-       /* public async Task<bool> UserOwnsRestaurantAsync(Guid restaurantId, string userId)
-        {
-            var restaurant = await _context.Restaurants
-                .AsNoTracking()
-                .SingleOrDefaultAsync(x => x.Id == restaurantId);
-
-            if(restaurant == null)
-            {
-                return false;
-            }
-
-            if (restaurant.UserId != userId)
-            {
-                return false;
-            }
-
-            return true;
-        } */
     }
 }

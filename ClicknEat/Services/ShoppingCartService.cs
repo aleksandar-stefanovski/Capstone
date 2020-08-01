@@ -3,7 +3,6 @@ using ClicknEat.Domain;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace ClicknEat.Services
 {
-    public class ShoppingCartService : IShoppingCartService
+    public class ShoppingCartService
     {
         private readonly ApplicationDbContext _context;
         private readonly ShoppingCart _shoppingCart;
@@ -22,46 +21,39 @@ namespace ClicknEat.Services
             _shoppingCart = shoppingCart;
         }
 
-       *//* public Task GetCart(IServiceProvider services)
+      *//*  public ShoppingCart GetCartAsync(IServiceProvider services)
         {
             ISession session = services.GetRequiredService<IHttpContextAccessor>()?
                 .HttpContext.Session;
 
             var context = services.GetService<ApplicationDbContext>();
+
             string cartId = session.GetString("CartId") ?? Guid.NewGuid().ToString();
 
             session.SetString("CartId", cartId);
 
-            return new { Shopping_shoppingCart = cartId };
+            return new ShoppingCart(context) { Id = cartId };
         }*//*
-
-        public async Task<bool> CreateCartAsync(ShoppingCart shoppingCart)
-        {
-            await _context.ShoppingCart
-                .AddAsync(shoppingCart);
-
-            var created = await _context
-                .SaveChangesAsync();
-
-            return created > 0;
-        }
 
         public async Task<bool> AddToCartAsync(Product product, int quantity)
         {
-
-            var shoppingCartItem = _context.ShoppingCartItems
-                .SingleOrDefault(x => x.Product.Id == product.Id && x.ShoppingCart.Id == _shoppingCart.Id);
+            var shoppingCartItem = await _context
+                .ShoppingCartItems
+                .SingleOrDefaultAsync(x => x.Product.Id == product.Id
+                && x.ShoppingCartId == _shoppingCart.Id);
 
             if (shoppingCartItem == null)
             {
                 shoppingCartItem = new ShoppingCartItem
                 {
+                    Id = new Guid(),
                     ShoppingCartId = _shoppingCart.Id,
                     Product = product,
                     Quantity = quantity
                 };
-                await _context.ShoppingCartItems
-                   .AddAsync(shoppingCartItem);
+
+                _context.ShoppingCartItems
+                    .Add(shoppingCartItem);
             }
             else
             {
@@ -69,24 +61,27 @@ namespace ClicknEat.Services
             }
 
             var created = await _context
-         .SaveChangesAsync();
+                  .SaveChangesAsync();
 
             return created > 0;
         }
 
-       *//* public async Task<int> RemoveCartAsync(Product product)
-        {
-            var shoppingCartItem = _context.ShoppingCartItems
-                .SingleOrDefault(s => s.Product.Id == product.Id && s.Id == ShoppingCart.Id);
 
-            var localAmount = 0;
+        public async Task<int> RemoveFromCartAsync(Product product)
+        {
+            var shoppingCartItem = await _context
+                .ShoppingCartItems
+                .SingleOrDefaultAsync(x => x.Product.Id == product.Id
+                && x.ShoppingCartId == _shoppingCart.Id);
+
+            var localQunatity = 0;
 
             if (shoppingCartItem != null)
             {
-                if (shoppingCartItem.Amount > 1)
+                if (shoppingCartItem.Quantity > 1)
                 {
-                    shoppingCartItem.Amount--;
-                    localAmount = shoppingCartItem.Amount;
+                    shoppingCartItem.Quantity--;
+                    localQunatity = shoppingCartItem.Quantity;
                 }
                 else
                 {
@@ -94,33 +89,46 @@ namespace ClicknEat.Services
                         .Remove(shoppingCartItem);
                 }
             }
+            _context.SaveChanges();
 
-            await _context
-                .SaveChangesAsync();
-
-            return localAmount;
+            return localQunatity;
         }
 
-        public async Task<bool> ClearShoppingCartAsync()
+        // METHODS
+
+        public async Task<List<ShoppingCartItem>> GetShoppingCartItemsAsync()
         {
-            var cartItems = _context.ShoppingCartItems
-                .Where(c => c.Id == ShoppingCart.Id);
-
-            _context.ShoppingCartItems.RemoveRange(cartItems);
-
-            var deleted = await _context
-                .SaveChangesAsync();
-
-            return deleted > 0;
+            return (List<ShoppingCartItem>)(_shoppingCart.ShoppingCartItems ??=
+                await _context.ShoppingCartItems
+                .Where(x => x.ShoppingCartId == _shoppingCart.Id)
+                .Include(p => p.Product)
+                .ToListAsync());
         }
 
-        public decimal GetShoppingCartTotal()
+        public async Task<bool> ClearCartAsync()
         {
-            return _context.ShoppingCartItems
-                .Where(x => x.Id == ShoppingCart.Id)
-                .Select(s => s.Product.Price * s.Amount)
-                .Sum();
-        }*//*
+            var cartItems = _context
+                .ShoppingCartItems
+                .Where(cart => cart.ShoppingCartId == _shoppingCart.Id);
+
+            _context.ShoppingCartItems
+                .RemoveRange(cartItems);
+
+            var removed = await _context
+                .SaveChangesAsync();
+
+            return removed > 0;
+        }
+
+        public async Task<int> GetShoppingCartTotalAsync()
+        {
+            var total = await _context.ShoppingCartItems
+                .Where(x => x.ShoppingCartId == _shoppingCart.Id)
+                .Select(p => p.Product.Price * p.Quantity)
+                .SumAsync();
+
+            return total;
+        }
     }
 }
 */

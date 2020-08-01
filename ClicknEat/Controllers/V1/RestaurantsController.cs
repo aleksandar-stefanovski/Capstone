@@ -12,6 +12,7 @@ using ClicknEat.Extensions;
 using ClicknEat.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -20,6 +21,7 @@ namespace ClicknEat.Controllers.V1
 {
     [ApiController]
     [Route(ApiRoutes.Restaurants.Route)]
+    [EnableCors("AllowOrigin")]
     public class RestaurantsController : Controller
     {
         private readonly IRestaurantService _restaurantService;
@@ -53,12 +55,9 @@ namespace ClicknEat.Controllers.V1
         {
             var restaurant = await _restaurantService.GetRestaurantAsync(restaurantId);
 
-           /* foreach (var item in restaurant)
-            {*/
-                if (restaurant.Id != null && restaurant.Id != Guid.Empty && restaurant.Id == restaurantId)
-            return Ok(new Response<RestaurantProductResponse>(_mapper.Map<RestaurantProductResponse>(restaurant)));
+            if (restaurant.Id != null && restaurant.Id != Guid.Empty && restaurant.Id == restaurantId)
+                return Ok(new Response<RestaurantProductResponse>(_mapper.Map<RestaurantProductResponse>(restaurant)));
 
-            
             return NotFound();
                     /*return Ok(_mapper.Map<List<Restaurant>, List<RestaurantProductResponse>>(restaurant));*/
         }
@@ -80,7 +79,7 @@ namespace ClicknEat.Controllers.V1
         /// </remarks>
         /// <response code="200">Returns all Restaurants in the system</response>
         /// <response code="400">Unable to create Restaurant</response>
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles ="Admin")]
+       /* [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles ="Admin")]*/
         [HttpPost(ApiRoutes.Restaurants.Create)]
         public async Task<IActionResult> CreateRestaurant([FromBody] CreateRestaurantRequest createRestaurantRequest)
         {
@@ -113,7 +112,7 @@ namespace ClicknEat.Controllers.V1
             /*var locationUri = _uriService.GetRestaurantUri(restaurant.Id.ToString());
             return Created(locationUri, new Response<RestaurantResponse>(_mapper.Map<RestaurantResponse>(restaurant)));*/
         }
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
+       /* [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]*/
         [HttpPut(ApiRoutes.Restaurants.Update)]
         public async Task<IActionResult> UpdateRestaurant([FromRoute] Guid restaurantId, [FromBody] UpdateRestaurantRequest updateRestaurantRequest)
         {
@@ -149,7 +148,7 @@ namespace ClicknEat.Controllers.V1
                 return BadRequest();
         }
 
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
+       /* [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]*/
         [HttpDelete(ApiRoutes.Restaurants.Delete)]
         public async Task<IActionResult> DeteleRestaurant([FromRoute] Guid restaurantId)
         {

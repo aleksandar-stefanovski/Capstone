@@ -11,12 +11,14 @@ using ClicknEat.Extensions;
 using ClicknEat.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ClicknEat.Controllers.V1
 {
     [ApiController]
+    [EnableCors("AllowOrigin")]
     public class RestaurantCategoryController : Controller
     {
         private readonly IRestaurantCategoryService _restaurantCategoryService;
@@ -45,7 +47,13 @@ namespace ClicknEat.Controllers.V1
             var restaurantCategory = await _restaurantCategoryService
                 .GetRestaurantCategoryAsync(restaurantCategoryId);
 
-            foreach (var item in restaurantCategory)
+            if (restaurantCategory.Id != null && restaurantCategory.Id != Guid.Empty && restaurantCategory.Id == restaurantCategoryId)
+                return Ok(new Response<RestaurantCategoryListResponse>(_mapper.Map<RestaurantCategoryListResponse>(restaurantCategory)));
+
+
+            return NotFound();
+
+       /*     foreach (var item in restaurantCategory)
             {
                 if (item.Id != null && item.Id != Guid.Empty && item.Id == restaurantCategoryId)
                 {
@@ -53,11 +61,11 @@ namespace ClicknEat.Controllers.V1
                 }
             }
 
-            /*return Ok(new Response<RestaurantResponse>(_mapper.Map<RestaurantResponse>(restaurant)));*/
-            return NotFound();
+            *//*return Ok(new Response<RestaurantResponse>(_mapper.Map<RestaurantResponse>(restaurant)));*//*
+            return NotFound();*/
         }
 
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
+        /*[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]*/
         [HttpPost(ApiRoutes.RestaurantsCategories.Create)]
         public async Task<IActionResult> CreateRestaurantCategory([FromBody] CreateRestaurantCategoryRequest createRestaurantCategoryRequest)
         {
@@ -77,7 +85,7 @@ namespace ClicknEat.Controllers.V1
             return Ok(new Response<RestaurantCategoryResponse>(_mapper.Map<RestaurantCategoryResponse>(restaurantCategory)));
         }
 
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
+        /*[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]*/
         [HttpPut(ApiRoutes.RestaurantsCategories.Update)]
         public async Task<IActionResult> UpdateRestaurantCategory([FromRoute] Guid restaurantCategoryId, [FromBody] UpdateRestaurantCategoryRequest updateRestaurantCategoryRequest)
         {
@@ -99,7 +107,7 @@ namespace ClicknEat.Controllers.V1
             return NotFound();
         }
 
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
+       /* [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]*/
         [HttpDelete(ApiRoutes.RestaurantsCategories.Delete)]
         public async Task<IActionResult> DeteleRestaurantCategory([FromRoute] Guid restaurantCategoryId)
         {

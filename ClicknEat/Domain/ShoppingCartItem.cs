@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ClicknEat.Contracts.V1.Responses;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -13,13 +14,10 @@ namespace ClicknEat.Domain
      [Key]
      public Guid Id { get; set; }
 
-     public Guid ShoppingCartId { get; set; }
+     public string ShoppingCartId { get; set; }
 
      [Required]
-     public int Quantity { get; set; }
-
-     [ForeignKey(nameof(ShoppingCartId))]
-     public ShoppingCart ShoppingCart { get; set; }
+     public int Quantity { get; set; } 
 
      public Product Product { get; set; }
     }

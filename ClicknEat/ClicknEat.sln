@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClicknEat", "ClicknEat.cspr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClicknEat.Contracts", "..\ClicknEat.Contracts\ClicknEat.Contracts.csproj", "{649133C8-D729-4A85-9585-C80EDB5511DC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClicknEat.IntegrationTests", "..\ClicknEat.IntegrationTests\ClicknEat.IntegrationTests.csproj", "{914B3557-C527-4D3E-B8EA-1EE13A854784}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{649133C8-D729-4A85-9585-C80EDB5511DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{649133C8-D729-4A85-9585-C80EDB5511DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{649133C8-D729-4A85-9585-C80EDB5511DC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{914B3557-C527-4D3E-B8EA-1EE13A854784}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{914B3557-C527-4D3E-B8EA-1EE13A854784}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{914B3557-C527-4D3E-B8EA-1EE13A854784}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{914B3557-C527-4D3E-B8EA-1EE13A854784}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

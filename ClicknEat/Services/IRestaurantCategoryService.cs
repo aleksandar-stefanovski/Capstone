@@ -10,7 +10,7 @@ namespace ClicknEat.Services
     {
         Task<List<RestaurantCategory>> GetAllAsync();
 
-        Task<List<RestaurantCategory>> GetRestaurantCategoryAsync(Guid restaurantCategoryId);
+        Task<RestaurantCategory> GetRestaurantCategoryAsync(Guid restaurantCategoryId);
 
         Task<bool> CreateRestaurantCategoryAsync(RestaurantCategory restaurantCategory);
 

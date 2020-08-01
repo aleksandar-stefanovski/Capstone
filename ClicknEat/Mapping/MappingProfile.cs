@@ -19,13 +19,15 @@ namespace ClicknEat.Mapping
             CreateMap<RestaurantCategory, RestaurantCategoryListResponse>();
 
             CreateMap<Product, ProductResponse>();
-            CreateMap<Product, CartProductResponse>();
 
             CreateMap<ProductCategory, ProductCategoryResponse>();
             CreateMap<ProductCategory, ProductCategoryListResponse>();
-            
 
-           /* CreateMap<ShoppingCartItem, ShoppingCartItemResponse>();*/
+            CreateMap<ShoppingCart, ShoppingCartViewModel>();
+
+
+            CreateMap<Order, OrderResponse>();
+            CreateMap<OrderDetail, OrderDetailResponse>();
         }
     }
 }

@@ -25,6 +25,12 @@ namespace ClicknEat.Installers
                })
                .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
 
+            services.AddControllersWithViews()
+            .AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+
+            services.AddMemoryCache();
+            services.AddSession();
+
             // Configure JWT
             var jwtSettings = new JwtSettings();
             Configuration.Bind(nameof(jwtSettings), jwtSettings);

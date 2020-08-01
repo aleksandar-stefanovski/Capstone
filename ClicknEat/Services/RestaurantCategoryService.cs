@@ -22,12 +22,12 @@ namespace ClicknEat.Services
             return await _context.RestaurantCategories.ToListAsync();
         }
 
-        public async Task<List<RestaurantCategory>> GetRestaurantCategoryAsync(Guid restaurantCategoryId)
+        public async Task<RestaurantCategory> GetRestaurantCategoryAsync(Guid restaurantCategoryId)
         {
             return await _context.RestaurantCategories
                 .Where(x => x.Id == restaurantCategoryId)
                 .Include(x => x.Restaurants)
-                .ToListAsync();
+                .FirstOrDefaultAsync();
         }
 
         public async Task<bool> CreateRestaurantCategoryAsync(RestaurantCategory restaurantCategory)

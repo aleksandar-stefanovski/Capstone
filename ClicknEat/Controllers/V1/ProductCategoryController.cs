@@ -11,12 +11,14 @@ using ClicknEat.Extensions;
 using ClicknEat.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ClicknEat.Controllers.V1
 {
     [ApiController]
+    [EnableCors("AllowOrigin")]
     public class ProductCategoryController : ControllerBase
     {
         private readonly IProductCategoryService _productCategoryService;

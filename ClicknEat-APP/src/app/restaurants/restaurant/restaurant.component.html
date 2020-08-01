@@ -1,0 +1,52 @@
+<section>
+
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container">
+            <div class="row">
+                <div class="text-center">
+
+                    <div class="navbar-nav mr-auto"></div>
+                    <ul class="navbar-nav align-items-lg-center">
+                        <li class="main-nav-item py-2 px-3">
+                            <button type="button" (click)="reset()" class="nav-link" style="border: none; display: inline-block; text-decoration: none; background-color: transparent;">All</button>
+                        </li>
+                        <li class="main-nav-item py-2 px-3" *ngFor="let pc of restaurantCategories">
+                            <button type="button" (click)="filterRestaurantByCategory(pc)" class="nav-link" style="border: none; display: inline-block; text-decoration: none; background-color: transparent;">
+                {{ pc.restaurantCategoryName }}
+              </button></li>
+
+                        <li class="mr-auto"> <button type="button" *ngIf="logged != null" (click)="add()">Add Restaurant</button></li>
+                        <li class="mr-auto"> <button type="button" *ngIf="logged != null" class="ml-3" (click)="showCategories()">Display Restaurant
+                Categories</button></li>
+                    </ul>
+
+
+                </div>
+            </div>
+        </div>
+    </nav>
+</section>
+
+<section>
+    <div class="container">
+        <div class="row">
+
+            <div class="card-deck col-4 mx-0" *ngFor="let res of filterRestaurants">
+                <div class="card mx-0">
+                    <a [routerLink]="['/restaurant-details/' + res.id]">
+                        <img class="card-img-top img-fluid" src="assets/logo.png" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ res.restaurantName }}</h5>
+                            <p class="card-text">{{ res.description }}</p>
+                            <p class="card-text">{{ res.restaurantCategory.restaurantCategoryName }}</p>
+                            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                        </div>
+                    </a>
+                    <button type="button">Edit Restaurant</button>
+                    <button type="button " (click)="deleteRestaurant(res.id)">Delete Restaurant</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>

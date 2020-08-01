@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Net.Http.Headers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,11 +12,8 @@ namespace ClicknEat.Installers
     {
         public void InstallServices(IServiceCollection services, IConfiguration Configuration)
         {
-            services.AddCors(options =>
-            {
-                options.AddPolicy("ClicknEatOrigin",
-                builder => builder.WithOrigins("http://localhost:4200"));
-            });
+          
         }
     }
 }
+

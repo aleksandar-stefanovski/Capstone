@@ -16,6 +16,8 @@ namespace ClicknEat.Services
 
         Task<Product> GetProductByIdAsync(Guid restaurantId, Guid productId);
 
+        Task<Product> ProductByIdAsync(Guid productId);
+
         Task<bool> UpdateProductAsync(Product productToUpdate);
 
         Task<bool> DeleteProductAsync(Guid restaurantId, Guid productId);

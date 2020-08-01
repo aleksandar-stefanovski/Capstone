@@ -18,11 +18,14 @@ using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Mvc;
 using ClicknEat.Installers;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Net.Http.Headers;
 
 namespace ClicknEat
 {
     public class Startup
     {
+        readonly string MyAllowSpecificOrigins = "AllowOrigin";
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -33,6 +36,19 @@ namespace ClicknEat
         public void ConfigureServices(IServiceCollection services)
         {
             services.InstallServicesInAssembly(Configuration);
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy(MyAllowSpecificOrigins,
+                                  builder =>
+                                  {
+                                      builder.WithOrigins("http://localhost:4200")
+                                                          .AllowAnyHeader()
+                                                          .AllowAnyMethod();
+                                  });
+            });
+
+            services.AddControllers();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -45,12 +61,12 @@ namespace ClicknEat
             {
                 app.UseHsts();
             }
-
             app.UseHttpsRedirection();
+            app.UseCors(MyAllowSpecificOrigins);
             app.UseStaticFiles();
 
             app.UseAuthentication();
-
+            app.UseSession();
              /////////////////////////////////////////
             ////////  Setting up Swagger  ///////////
            /////////////////////////////////////////
@@ -70,9 +86,9 @@ namespace ClicknEat
 
             });
 
-            /////////////////////////////////////
 
-            app.UseCors("ClicknEatOrigin");
+            /////////////////////////////////////
+            /* app.UseCors(options => options.WithOrigins("https://localhost:4200"));*/
             app.UseMvc();
         }
     }

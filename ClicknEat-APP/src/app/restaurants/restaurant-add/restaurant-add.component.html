@@ -1,0 +1,23 @@
+<div class="container">
+    <form #form="ngForm" (submit)="onSubmit(form)" autocomplete="off">
+        <div class="form-group">
+            <label>Restaurant Name: </label>
+            <input name="restaurantName" #restaurantName="ngModel" [(ngModel)]="restaurantAdd.restaurantName" class="form-control" required>
+            <div class="validation-error" *ngIf="restaurantName.invalid && restaurantName.touched">This field is required.
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Description</label>
+            <input name="description" #description="ngModel" [(ngModel)]="restaurantAdd.description" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <select name="restaurantCategory" [(ngModel)]=" restaurantAdd.restaurantCategory">
+        <option *ngFor="let category of restaurantCategories" [ngValue]="category">{{ category.restaurantCategoryName }}
+        </option>
+      </select>
+        </div>
+        <div class="form-group">
+            <button type="submit" [disabled]="form.invalid" class="btn btn-lg btn-block">SUBMIT</button>
+        </div>
+    </form>
+</div>

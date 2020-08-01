@@ -1,4 +1,4 @@
-﻿/*using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,6 +11,7 @@ using ClicknEat.Domain;
 using ClicknEat.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -20,57 +21,85 @@ namespace ClicknEat.Controllers.V1
 {
     [Route(ApiRoutes.Cart.Route)]
     [ApiController]
-    public class ShoppingCartController : ControllerBase
+    [EnableCors("AllowOrigin")]
+    public class ShoppingCartController : Controller
     {
-        private readonly IShoppingCartService _shoppingCartService;
-        private readonly IMapper _mapper;
         private readonly ApplicationDbContext _context;
         private readonly ShoppingCart _shoppingCart;
+        private readonly IProductService _productService;
+        private readonly IMapper _mapper;
 
-        public ShoppingCartController(IShoppingCartService shoppingCartService, IMapper mapper, ApplicationDbContext context, ShoppingCart shoppingCart)
+        public ShoppingCartController(IMapper mapper, IProductService productService, ApplicationDbContext context, ShoppingCart shoppingCart)
         {
-            _shoppingCartService = shoppingCartService;
-            _mapper = mapper;
             _context = context;
             _shoppingCart = shoppingCart;
+            _productService = productService;
+            _mapper = mapper;
         }
 
-
-
-
-        [HttpPost(ApiRoutes.Cart.AddToCart)]
-        public async Task<IActionResult> AddToCart(Guid productId)
+        [HttpGet(ApiRoutes.Cart.Get)]
+        public async Task<IActionResult> Get()
         {
-            var selectedProduct = _context.Products.FirstOrDefault(x => x.Id == productId);
+            var items = await _shoppingCart
+                .GetShoppingCartItemsAsync();
 
-            if (selectedProduct != null)
+            _shoppingCart.ShoppingCartItems = items;
+
+            var sCVM = new ShoppingCartViewModel
             {
-                await _shoppingCartService.AddToCartAsync(selectedProduct, 1);
-            }
-
-            return Ok(new Response<ShoppingCartItemResponse>(_mapper.Map<ShoppingCartItemResponse>(selectedProduct)));
-        }
-
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "User, Admin")]
-        [HttpPost(ApiRoutes.Cart.Create)]
-        public async Task<IActionResult> Create(CreateShoppingCartRequest shoppingCartRequest)
-        {
-            var cart = new ShoppingCart
-            {
-                Id = shoppingCartRequest.Id,
-                UserId = shoppingCartRequest.UserId
+                Id = _shoppingCart.Id,
+                ShoppingCartItems = _shoppingCart.ShoppingCartItems,
+                ShoppingCartTotal = await _shoppingCart.GetShoppingCartTotalAsync()
             };
 
-            if (string.IsNullOrEmpty(cart.Id.ToString()))
-                shoppingCartRequest.Id = Guid.NewGuid();
+            return Ok(new Response<ShoppingCartViewModel>(_mapper.Map<ShoppingCartViewModel>(sCVM)));
+        }
 
-            await _shoppingCartService.CreateCartAsync(cart);
+        [HttpPost(ApiRoutes.Cart.AddToCart)]
+        public async Task<IActionResult> AddToShoppingCart(Guid productId)
+        {
+            var selectedProduct = await _productService.ProductByIdAsync(productId);
+
+            if(selectedProduct != null)
+            {
+                await _shoppingCart
+                    .AddToCartAsync(selectedProduct, 1);
+            }
 
             var baseUrl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host.ToUriComponent()}";
-            var lacationUrl = baseUrl + "/" + ApiRoutes.Cart.Get.Replace("{cartId}", shoppingCartRequest.Id.ToString());
+            var locationUri = baseUrl + "/" + ApiRoutes.Cart.Get.Replace("{cartId}", _shoppingCart.Id.ToString());
 
-            var response = new ShoppingCartResponse { Id = cart.Id.ToString() };
-            return Created(lacationUrl, response);
+            /* var locationUri = _uriService.GetCartUri(sCVM.ShoppingCart.Id.ToString()); */
+            return Created(locationUri, selectedProduct);
         }
+
+        [HttpDelete(ApiRoutes.Cart.RemoveFromCart)]
+        public async Task<IActionResult> RemoveFromShoppingCart([FromQuery] Guid productId)
+        {
+            var selectedProduct = await _productService.ProductByIdAsync(productId);
+                
+            if (selectedProduct != null)
+            {
+                await _shoppingCart
+                    .RemoveFromCartAsync(selectedProduct);
+            }
+
+            return NoContent();
+        }
+
+        /*[HttpDelete(ApiRoutes.Cart.ClearCart)]
+        public async Task<IActionResult> ClearShoppingCart([FromQuery] Guid productId)
+        {
+            var selectedProducts = await _shoppingCart.GetShoppingCartItemsAsync();
+
+            if (selectedProducts != null)
+            {
+                await _shoppingCart
+                    .ClearCartAsync();
+            }
+
+            return NoContent();
+        }*/
+
     }
-}*/
+}
