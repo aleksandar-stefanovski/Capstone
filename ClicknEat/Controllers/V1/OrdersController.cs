@@ -108,13 +108,13 @@ namespace ClicknEat.Controllers.V1
             await _orderService.CreateOrder(order);
 
             var baseUrl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host.ToUriComponent()}";
-            var locationUri = baseUrl + ApiRoutes.Order.Get.Replace("{orderId}", order.Id.ToString());
+            var locationUri = baseUrl + ApiRoutes.Order.Get. Replace("{orderId}", order.Id.ToString());
 
             /*var locationUri = _uriService.GetCartUri(sCVM.ShoppingCart.Id.ToString());*/
             return Created(locationUri, new Response<OrderResponse>(_mapper.Map<OrderResponse>(order)));
         }
 
-        [HttpPost(ApiRoutes.Order.Remove)]
+        [HttpDelete(ApiRoutes.Order.Remove)]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
         public async Task<IActionResult> RemoveOrder([FromRoute] Guid orderId)
         {

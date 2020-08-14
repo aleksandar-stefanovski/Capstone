@@ -39,6 +39,8 @@ namespace ClicknEat.Services
             var orders = await _context.Orders
                .AsNoTracking()
                .Where(x => x.UserId == userId)
+               .Include(o => o.OrderDetails)
+               .ThenInclude(p => p.Product)
                .ToListAsync();
 
             if (orders == null)

@@ -81,13 +81,11 @@ namespace ClicknEat.Contracts.V1
 
         public static class Order
         {
-            public const string GetAll = Base + "/Orders";
-
-            public const string GetMine = Base + "/Orders/My-Orders";
+            public const string GetAll = Base + "/Admin/Orders";
 
             public const string Get = Base + "/Admin/Orders/{orderId}";
 
-            public const string Create = Base + "/Admin/Orders";
+            public const string Create = Base + "/Order/Checkout";
 
             public const string Remove = Base + "/Admin/{orderId}";
         }

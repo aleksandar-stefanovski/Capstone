@@ -22,3 +22,4 @@ WORKDIR /app
 COPY --from=build /build/out .
 
 ENTRYPOINT ["dotnet", "ClicknEat.dll"]
+

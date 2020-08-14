@@ -56,7 +56,7 @@ namespace ClicknEat.Services
                 .CreateAsync(newUser, password);
 
             /*await _userManager
-             * .AddToRoleAsync(newUser, "Admin");*/
+              .AddToRoleAsync(newUser, "Admin");*/
 
             await _userManager
                 .AddToRoleAsync(newUser, "User");
