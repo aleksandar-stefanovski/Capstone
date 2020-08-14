@@ -1,0 +1,67 @@
+<div class="animated fadeIn">
+    <div class="row">
+        <div class="col-sm-6 col-md-12">
+            <div class="d-flex">
+                <div class="card-header">
+                    <img class="img-fluid" src="../../../assets/img/logo.png" alt="Restaurant-Image">
+                </div>
+                <div class="card-body align-self-end">
+                    <h3 class="h3">
+                        {{ restaurant?.restaurantName }}
+                    </h3>
+                    <h5 class="h6 mb-3">
+                        {{ restaurant?.restaurantCategory.restaurantCategoryName }}
+                    </h5>
+                    <p class="">
+                        {{ restaurant?.description.length > 100 ? restaurant?.description.substring(0,100)+"..." : restaurant?.description }}
+                    </p>
+                </div>
+            </div>
+        </div>
+        <!--/.coll-->
+    </div>
+    <!--/.row-->
+</div>
+
+<nav class="animated fadeIn navbar navbar-expand-lg navbar-light row justify-content-center justify-content-md-between">
+    <ul class="navbar-nav d-flex flex-row ">
+        <li class="main-nav-item py-2 px-3">
+            <button type="button" (click)="reset()" class="nav-link" style="border: none; display: inline-block; text-decoration: none; background-color: transparent;">All</button>
+        </li>
+        <li class="main-nav-item py-2 px-3" *ngFor="let pc of productCategories">
+            <button type="button" (click)="filterProductsByCategory(pc)" class="nav-link" style="border: none; display: inline-block; text-decoration: none; background-color: transparent;">
+          {{ pc.productCategoryName }}
+        </button></li>
+    </ul>
+    <button type=" button " click="add() " class="btn btn-success float-right">Add New Product</button>
+</nav>
+
+<div class="animated fadeIn">
+    <div class="row">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>No.</th>
+                    <th>Product Name</th>
+                    <th>Product Category</th>
+                    <th>Description</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let product of filterData; let i = index">
+                    <td>{{ i+1 }}</td>
+                    <td>{{ product.productName }}</td>
+                    <td>{{ product.productCategory.productCategoryName }}</td>
+                    <td>{{ product.description.length > 32 ? product.description.substring(0,32)+"..." : product.description }}
+                    </td>
+                    <td class="d-flex justify-content-around">
+                        <button type=" button " click="add() " class="btn btn-info ">Details</button>
+                        <button type=" button " click="add() " class="btn btn-warning ">Edit</button>
+                        <button type="button " click="deleteProduct(id: string)" class="btn btn-danger ">Delete</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
