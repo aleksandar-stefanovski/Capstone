@@ -1,0 +1,24 @@
+<div class="card">
+    <div class="card-header">Update Restaurant Category </div>
+    <form #form="ngForm" (submit)="onSubmit(form)" autocomplete="off" class="ng-untouched ng-pristine ng-valid">
+
+        <div class="card-body">
+            <div class="form-group">
+                <label for="r-category">Restaurant Category Name:</label>
+                <input value="" autocomplete="text" class="form-control" id="r-category" name="restaurantCategoryName" #restaurantCategoryName="ngModel" [(ngModel)]="restaurantCategoryEdit.restaurantCategoryName" placeholder="Update Restaurant Category Name.." type="text">
+                <div class="validation-error" *ngIf="restaurantCategoryName.invalid && restaurantCategoryName.touched">This field is required.
+                </div>
+            </div>
+        </div>
+
+        <div class="card-footer">
+            <button type="submit" [disabled]="form.invalid" class="btn btn-sm btn-primary">
+        <i class="fa fa-dot-circle-o"></i>
+        Submit</button>
+            <button class="btn btn-sm btn-danger" type="reset">
+        <i class="fa fa-ban"></i>
+        Reset</button>
+        </div>
+
+    </form>
+</div>

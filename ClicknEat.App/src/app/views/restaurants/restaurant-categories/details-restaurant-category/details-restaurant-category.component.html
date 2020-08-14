@@ -1,0 +1,29 @@
+<div class="animated fadeIn">
+    <div class="row">
+
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>No.</th>
+                    <th>Restaurant Name</th>
+                    <th>Restaurant Category</th>
+                    <th>Description</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let res of restaurantCategory?.categoryRestaurants; let i = index">
+                    <td>{{ i+1 }}.</td>
+                    <td>{{ res.restaurantName }}</td>
+                    <td>{{ res.restaurantCategory.restaurantCategoryName }}</td>
+                    <td>{{ res.description.length > 32 ? res.description.substring(0,32)+"..." : res.description }}</td>
+                    <td class="d-flex justify-content-around">
+                        <button type="button" [routerLink]="['/restaurant-details/' + res.id]" class="btn btn-info ">Details</button>
+                        <button type="button" class="btn btn-warning ">Edit</button>
+                        <button type="button" (click)='deleteRestaurant(res.id)' class="btn btn-danger ">Delete</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
