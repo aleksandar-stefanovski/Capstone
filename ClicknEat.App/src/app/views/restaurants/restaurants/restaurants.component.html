@@ -34,7 +34,7 @@
                     <td class="d-flex justify-content-around">
                         <button type="button" [routerLink]="['/restaurant-details/' + res.id]" class="btn btn-info ">Details
             </button>
-                        <button type="button " click="edit()" class="btn btn-warning ">Edit</button>
+                        <button type="button " [routerLink]="['edit-restaurant/' + res.id]" class="btn btn-warning ">Edit</button>
                         <button type="button " (click)="deleteRestaurant(res.id) " class="btn btn-danger ">Delete</button>
                     </td>
                 </tr>

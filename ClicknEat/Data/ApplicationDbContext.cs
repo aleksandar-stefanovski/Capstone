@@ -9,12 +9,24 @@ namespace ClicknEat.Data
 {
     public class ApplicationDbContext : IdentityDbContext
     {
+    
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
         }
 
-       public DbSet<Restaurant> Restaurants { get; set; }
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+
+            builder.Entity<Product>()
+                .HasMany(x => x.ShoppingCartItems)
+                .WithOne(c => c.Product)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Cascade);
+        }
+
+        public DbSet<Restaurant> Restaurants { get; set; }
        public DbSet<RestaurantCategory> RestaurantCategories { get; set; }
        public DbSet<Product> Products { get; set; }
        public DbSet<ProductCategory> ProductCategories { get; set; }

@@ -1,4 +1,5 @@
 ﻿using ClicknEat.Domain;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,16 +11,16 @@ namespace ClicknEat.Services
     {
         Task<List<Product>> GetAllAsync(Guid restaurantId);
 
-        Task<Product> GetProductAsync(Guid restaurantId, Guid productId);
+        Task<Product> GetProductAsync(Guid productId);
 
         Task<bool> CreateProductAsync(Product product);
 
-        Task<Product> GetProductByIdAsync(Guid restaurantId, Guid productId);
+        Task<Product> GetProductByIdAsync(Guid productId);
 
         Task<Product> ProductByIdAsync(Guid productId);
 
         Task<bool> UpdateProductAsync(Product productToUpdate);
 
-        Task<bool> DeleteProductAsync(Guid restaurantId, Guid productId);
+        Task<bool> DeleteProductAsync(Guid productId);
     }
 }

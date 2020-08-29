@@ -1,0 +1,74 @@
+<div class="animated fadeIn">
+    <div class="row">
+        <div class="col-sm-6 col-md-12">
+            <div class="d-flex">
+                <div class="card-header">
+                    <img class="img-fluid" src="../../../assets/img/logo.png" alt="Restaurant-Image">
+                </div>
+                <div class="card-body align-self-end">
+                    <h3 class="h3">
+                        {{ restaurant?.restaurantName }}
+                    </h3>
+                    <h5 class="h6 mb-3">
+                        {{ restaurant?.restaurantCategory.restaurantCategoryName }}
+                    </h5>
+                    <p class="">
+                        {{ restaurant?.description.length > 100 ? restaurant?.description.substring(0,100)+"..." : restaurant?.description }}
+                    </p>
+                </div>
+            </div>
+        </div>
+        <!--/.coll-->
+    </div>
+    <!--/.row-->
+</div>
+
+<nav class="animated fadeIn navbar navbar-expand-lg navbar-light row justify-content-center justify-content-md-between">
+    <ul class="navbar-nav d-flex flex-row ">
+        <li class="main-nav-item py-2 px-3">
+            <button type="button" (click)="reset()" class="nav-link" style="border: none; display: inline-block; text-decoration: none; background-color: transparent;">All</button>
+        </li>
+        <li class="main-nav-item py-2 px-3" *ngFor="let pc of productCategories">
+            <button type="button" (click)="filterProductsByCategory(pc)" class="nav-link" style="border: none; display: inline-block; text-decoration: none; background-color: transparent;">
+        {{ pc.productCategoryName }}
+      </button></li>
+
+    </ul>
+</nav>
+
+<div class="animated fadeIn">
+    <div class="row">
+        <div class="col-sm-6 col-md-3" *ngFor="let product of filterData; let i = index">
+            <div class="card">
+                <a [routerLink]="['product/' + product.id]" class="card-link-rm-style">
+                    <div class="card-header">
+                        <img class="img-fluid" src="../../../assets/img/logo.png" alt="Restaurant-Image">
+                    </div>
+                </a>
+                <div class="card-body">
+                    <h3 class="h3">
+                        {{ product.productName }}
+                    </h3>
+                    <h5 class="h6 mb-3">
+                        {{ product.productCategory.productCategoryName }}
+                    </h5>
+                    <h5 class="h6 mb-3">
+                        {{ product.price }}
+                    </h5>
+                    <p class="">
+                        {{ product.description.length > 42 ? product.description.substring(0,42)+"..." : product.description }}
+                    </p>
+                </div>
+
+                <div class="card-footer">
+                    <button class="btn btn-warning m-0">
+            <i class="cui-cart icons font-1xl"></i>
+            Add to Cart
+          </button>
+                </div>
+            </div>
+        </div>
+        <!--/.coll-->
+    </div>
+    <!--/.row-->
+</div>

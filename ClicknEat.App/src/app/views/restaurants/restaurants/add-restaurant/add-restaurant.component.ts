@@ -4,25 +4,25 @@ import { RestaurantsCategories } from '../../../../models/restaurant/restaurantC
 import { RestaurantCategoryService } from '../../../../services/restaurant-category.service';
 import { RestaurantService } from '../../../../services/restaurant.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { RestaurantAdd } from '../../../../models/restaurant/restaurant.model';
+import { RestaurantAddEdit } from '../../../../models/restaurant/restaurant.model';
 
 @Component({
-  selector: 'app-add-restaurant',
-  templateUrl: './add-restaurant.component.html',
-  styleUrls: ['./add-restaurant.component.scss']
+  selector: 'app-shared-add-edit-restaurant',
+  templateUrl: './shared-add-edit-restaurant.component.html',
+  styleUrls: ['./shared-add-edit-restaurant.component.scss']
 })
 export class AddRestaurantComponent implements OnInit {
 
-  restaurantAdd: RestaurantAdd = new RestaurantAdd();
+  restaurantAddEdit: RestaurantAddEdit = new RestaurantAddEdit();
   restaurantCategories: RestaurantsCategories[];
 
   constructor(private restaurantCategoryService: RestaurantCategoryService, private restaurantService: RestaurantService,
-              private route: ActivatedRoute, private router: Router) { }
+    private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
     this.getRestaurantCategories();
-    console.log('TESTT:', this.restaurantAdd.restaurantCategory);
-
+    console.log('TESTT:', this.restaurantAddEdit);
+    console.log('TESTT2222:', this.restaurantCategories);
   }
 
   getRestaurantCategories() {
@@ -38,20 +38,20 @@ export class AddRestaurantComponent implements OnInit {
     if (form != null) {
       form.resetForm();
     }
-    this.restaurantAdd = {
+    this.restaurantAddEdit = {
       restaurantName: '',
       description: '',
-      restaurantCategory: null
+      categoryToRestaurantRequest: null
     };
   }
 
   createRestaurant(form: NgForm) {
+    console.log('EXAMPLE', form.value);
     this.restaurantService.createRestaurant(form.value).subscribe(res => {
       this.resetForm(form);
       this.goToRestaurants();
     });
 
-    console.log(this.restaurantAdd.restaurantCategory);
   }
 
   onSubmit(form: NgForm) {

@@ -30,10 +30,15 @@
         </li>
         <li class="main-nav-item py-2 px-3" *ngFor="let pc of productCategories">
             <button type="button" (click)="filterProductsByCategory(pc)" class="nav-link" style="border: none; display: inline-block; text-decoration: none; background-color: transparent;">
-          {{ pc.productCategoryName }}
-        </button></li>
+        {{ pc.productCategoryName }}
+      </button></li>
+        <li class="main-nav-item py-2 px-3">
+            <button type=" button" [routerLink]="['product-categories']" routerLinkActive="router-link-active" class="btn btn-info float-right">Product Categories</button>
+        </li>
     </ul>
-    <button type=" button " click="add() " class="btn btn-success float-right">Add New Product</button>
+    <div>
+        <button type=" button " [routerLink]="['product-add']" class="btn btn-success float-right">Add New Product</button>
+    </div>
 </nav>
 
 <div class="animated fadeIn">
@@ -44,6 +49,7 @@
                     <th>No.</th>
                     <th>Product Name</th>
                     <th>Product Category</th>
+                    <th>Price</th>
                     <th>Description</th>
                     <th>Actions</th>
                 </tr>
@@ -53,12 +59,13 @@
                     <td>{{ i+1 }}</td>
                     <td>{{ product.productName }}</td>
                     <td>{{ product.productCategory.productCategoryName }}</td>
+                    <td>{{ product.price }}</td>
                     <td>{{ product.description.length > 32 ? product.description.substring(0,32)+"..." : product.description }}
                     </td>
                     <td class="d-flex justify-content-around">
-                        <button type=" button " click="add() " class="btn btn-info ">Details</button>
-                        <button type=" button " click="add() " class="btn btn-warning ">Edit</button>
-                        <button type="button " click="deleteProduct(id: string)" class="btn btn-danger ">Delete</button>
+                        <button type=" button " [routerLink]="['product-details/' + product.id]" routerLinkActive="router-link-active" class="btn btn-info ">Details</button>
+                        <button type=" button " [routerLink]="['product-edit/' + product.id]" class="btn btn-warning ">Edit</button>
+                        <button type="button " (click)="deleteProduct(product.id)" class="btn btn-danger ">Delete</button>
                     </td>
                 </tr>
             </tbody>

@@ -17,8 +17,7 @@ export class RestaurantCategoryService {
   }
 
   getRestaurantCategory(id: string): Observable<RestaurantCategory> {
-    return this.http.get(this.endPoint + 'RestaurantCategory/RestaurantCategory/' + id).pipe(map((res?: any) => {
-      console.log(res);
+    return this.http.get(this.endPoint + 'RestaurantCategory/' + id).pipe(map((res?: any) => {
       const restaurantCategory = new RestaurantCategory({
         id: res.data.id,
         restaurantCategoryName: res.data.restaurantCategoryName,
@@ -35,7 +34,6 @@ export class RestaurantCategoryService {
           });
         })
       });
-      console.log('From Service:', restaurantCategory);
       return restaurantCategory;
     }));
   }
@@ -45,7 +43,6 @@ export class RestaurantCategoryService {
   }
 
   updateRestaurantCategory(id: string, restaurantCategory: RestaurantCategoryEdit): Observable<any> {
-    console.log(id);
     return this.http.put(this.endPoint + 'Admin/RestaurantCategory/UpdateRestaurantCategory/' + id, restaurantCategory);
   }
 

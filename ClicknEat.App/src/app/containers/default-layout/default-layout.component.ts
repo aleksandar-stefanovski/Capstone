@@ -1,5 +1,6 @@
-import {Component} from '@angular/core';
+import { Component } from '@angular/core';
 import { navItems } from '../../_nav';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -11,5 +12,13 @@ export class DefaultLayoutComponent {
 
   toggleMinimize(e) {
     this.sidebarMinimized = e;
+  }
+
+  constructor(private router: Router) {
+  }
+
+  onLogout() {
+    localStorage.removeItem('token');
+    this.router.navigate(['/login']);
   }
 }

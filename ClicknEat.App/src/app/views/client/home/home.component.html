@@ -1,0 +1,43 @@
+<nav class="animated fadeIn navbar navbar-expand-lg navbar-light">
+    <div class="row">
+        <div class="text-center">
+            <div class="navbar-nav mr-auto"></div>
+            <ul class="navbar-nav align-items-lg-center">
+                <li class="main-nav-item py-2 px-3">
+                    <button type="button" (click)="reset()" class="nav-link" style="border: none; display: inline-block; text-decoration: none; background-color: transparent;">All</button>
+                </li>
+                <li class="main-nav-item py-2 px-3" *ngFor="let pc of restaurantCategories">
+                    <button type="button" (click)="filterRestaurantByCategory(pc)" class="nav-link" style="border: none; display: inline-block; text-decoration: none; background-color: transparent;">
+            {{ pc.restaurantCategoryName }}
+          </button></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="animated fadeIn">
+    <div class="row">
+        <div class="col-sm-6 col-md-3" *ngFor="let res of filterRestaurants">
+            <div class="card">
+                <a [routerLink]="['restaurant/' + res.id]" class="card-link-rm-style">
+                    <div class="card-header">
+                        <img class="img-fluid" src="../../../assets/img/logo.png" alt="Restaurant-Image">
+                    </div>
+                </a>
+                <div class="card-body">
+                    <h3 class="h3">
+                        {{ res.restaurantName }}
+                    </h3>
+                    <h5 class="h6 mb-3">
+                        {{ res.restaurantCategory.restaurantCategoryName }}
+                    </h5>
+                    <p class="">
+                        {{ res.description.length > 100 ? res.description.substring(0,100)+"..." : res.description }}
+                    </p>
+                </div>
+            </div>
+        </div>
+        <!--/.coll-->
+    </div>
+    <!--/.row-->
+</div>

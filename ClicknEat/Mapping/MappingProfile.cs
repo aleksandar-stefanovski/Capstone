@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using ClicknEat.Contracts.V1.Requests;
 using ClicknEat.Contracts.V1.Responses;
 using ClicknEat.Domain;
 using System;
@@ -14,6 +15,8 @@ namespace ClicknEat.Mapping
         {
             CreateMap<Restaurant, RestaurantResponse>();
             CreateMap<Restaurant, RestaurantProductResponse>();
+
+            CreateMap<RestaurantCategory, CreateRestaurantRequest>().ForMember(x => x.CategoryToRestaurantRequest, opt => opt.Ignore());
 
             CreateMap<RestaurantCategory, RestaurantCategoryResponse>();
             CreateMap<RestaurantCategory, RestaurantCategoryListResponse>();

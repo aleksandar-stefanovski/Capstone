@@ -64,22 +64,10 @@ export class RestaurantsComponent implements OnInit {
     this.filterRestaurants = [...this.restaurants];
   }
 
-  // CRU
-
-  add() {
-    this.router.navigate(['restaurant-add']);
-  }
-
-  edit() {
-    this.router.navigate(['restaurant-edit']);
-  }
-
   deleteRestaurant(id: string) {
     this.restaurantService.deleteRestaurant(id).subscribe((data) => {
       const deletedContrat = this.restaurants.find(x => x.id === id);
       this.restaurants.splice(this.restaurants.indexOf(deletedContrat), 1);
     });
   }
-
-
 }

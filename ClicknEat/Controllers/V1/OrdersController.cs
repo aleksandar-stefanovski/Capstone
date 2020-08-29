@@ -42,8 +42,8 @@ namespace ClicknEat.Controllers.V1
             /*_uriService = uriService;*/
         }
 
-        [HttpGet(ApiRoutes.Order.GetAll)]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
+        [HttpGet(ApiRoutes.Order.GetAll)]
         public async Task<IActionResult> GetAllOrders()
         {
             var getOrders = await _orderService
@@ -55,8 +55,8 @@ namespace ClicknEat.Controllers.V1
             return Ok(_mapper.Map<List<Order>, List<OrderResponse>>(getOrders));
         }
 
-        [HttpGet(ApiRoutes.Profile.GetMine)]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "User")]
+        [HttpGet(ApiRoutes.Profile.GetMine)]
         public async Task<IActionResult> GetMyOrders()
         {
             var userId = HttpContext.GetUserId();
@@ -74,8 +74,8 @@ namespace ClicknEat.Controllers.V1
             return Ok(_mapper.Map<List<Order>, List<OrderResponse>>(getOrders));
         }
 
-        [HttpPost(ApiRoutes.Order.Create)]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "User")]
+        [HttpPost(ApiRoutes.Order.Create)]
         public async Task<IActionResult> CreateOrder([FromBody] CreateOrderRequest createOrderRequest)
         {
 
@@ -114,8 +114,8 @@ namespace ClicknEat.Controllers.V1
             return Created(locationUri, new Response<OrderResponse>(_mapper.Map<OrderResponse>(order)));
         }
 
-        [HttpDelete(ApiRoutes.Order.Remove)]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
+        [HttpDelete(ApiRoutes.Order.Remove)]
         public async Task<IActionResult> RemoveOrder([FromRoute] Guid orderId)
         {
             var userId = HttpContext.GetUserId();

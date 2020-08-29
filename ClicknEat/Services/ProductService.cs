@@ -20,15 +20,14 @@ namespace ClicknEat.Services
         public async Task<List<Product>> GetAllAsync(Guid restaurantId)
         {
             return await _context.Products
-                .Where(x => x.Restaurant.Id == restaurantId).Include(c => c.ProductCategory)
+                .Where(x => x.Restaurant.Id == restaurantId)
+                .Include(c => c.ProductCategory)
                 .ToListAsync();
         }
 
-        public async Task<Product> GetProductAsync(Guid restaurantId, Guid productId)
+        public async Task<Product> GetProductAsync(Guid productId)
         {
-            return await _context.Products
-                .Where(x => x.Restaurant.Id == restaurantId && x.Id == productId)
-                .FirstOrDefaultAsync();
+            return await GetProductByIdAsync(productId);
         }
 
         public async Task<bool> CreateProductAsync(Product product)
@@ -42,11 +41,11 @@ namespace ClicknEat.Services
             return created > 0;
         }
 
-        public async Task<Product> GetProductByIdAsync(Guid restaurantId, Guid productId)
+        public async Task<Product> GetProductByIdAsync(Guid productId)
         {
             return await _context.Products
-                .Where(x => x.Restaurant.Id == restaurantId && x.Id == productId)
-                .FirstOrDefaultAsync();
+                         .Where(x => x.RestaurantId == x.Restaurant.Id && x.Id == productId)
+                         .FirstOrDefaultAsync();
         }
 
         public async Task<Product> ProductByIdAsync(Guid productId)
@@ -67,20 +66,22 @@ namespace ClicknEat.Services
             return updated > 0;
         }
 
-        public async Task<bool> DeleteProductAsync(Guid restaurantId, Guid productId)
+        public async Task<bool> DeleteProductAsync(Guid productId)
         {
-            var product = await GetProductByIdAsync(restaurantId, productId);
+            var product = await GetProductByIdAsync(productId);
 
             if (product == null)
                 return false;
 
-            _context
+            _context.Products
                 .Remove(product);
+
 
             var deleted = await _context
                 .SaveChangesAsync();
 
             return deleted > 0;
+            
         }
     }
 }

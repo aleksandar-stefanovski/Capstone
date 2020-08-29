@@ -79,7 +79,7 @@ namespace ClicknEat.Controllers.V1
         /// </remarks>
         /// <response code="200">Returns all Restaurants in the system</response>
         /// <response code="400">Unable to create Restaurant</response>
-       /* [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles ="Admin")]*/
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles ="Admin")]
         [HttpPost(ApiRoutes.Restaurants.Create)]
         public async Task<IActionResult> CreateRestaurant([FromBody] CreateRestaurantRequest createRestaurantRequest)
         {
@@ -98,7 +98,7 @@ namespace ClicknEat.Controllers.V1
                 Id = newRestaurantId,
                 RestaurantName = createRestaurantRequest.RestaurantName,
                 Description = createRestaurantRequest.Description,
-                RestaurantCategory = query
+                RestaurantCategory = _mapper.Map<RestaurantCategory>(query)
             };
 
             if (restaurant == null)
@@ -112,7 +112,7 @@ namespace ClicknEat.Controllers.V1
             /*var locationUri = _uriService.GetRestaurantUri(restaurant.Id.ToString());
             return Created(locationUri, new Response<RestaurantResponse>(_mapper.Map<RestaurantResponse>(restaurant)));*/
         }
-       /* [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]*/
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
         [HttpPut(ApiRoutes.Restaurants.Update)]
         public async Task<IActionResult> UpdateRestaurant([FromRoute] Guid restaurantId, [FromBody] UpdateRestaurantRequest updateRestaurantRequest)
         {
@@ -148,7 +148,7 @@ namespace ClicknEat.Controllers.V1
                 return BadRequest();
         }
 
-       /* [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]*/
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
         [HttpDelete(ApiRoutes.Restaurants.Delete)]
         public async Task<IActionResult> DeteleRestaurant([FromRoute] Guid restaurantId)
         {

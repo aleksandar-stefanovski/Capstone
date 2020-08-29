@@ -52,9 +52,9 @@ namespace ClicknEat.Controllers.V1
         }
 
         [HttpGet(ApiRoutes.Products.Get)]
-        public async Task<IActionResult> GetProduct([FromRoute] Guid restaurantId, [FromRoute] Guid productId)
+        public async Task<IActionResult> GetProduct([FromRoute] Guid productId)
         {
-            var product = await _productService.GetProductAsync(restaurantId, productId);
+            var product = await _productService.GetProductAsync(productId);
 
             if (product == null)
             {
@@ -104,10 +104,10 @@ namespace ClicknEat.Controllers.V1
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
         [HttpPut(ApiRoutes.Products.Update)]
-        public async Task<IActionResult> UpdateRestaurant([FromRoute] Guid restaurantId, [FromRoute] Guid productId, [FromBody] UpdateProductRequest updateProductRequest)
+        public async Task<IActionResult> UpdateRestaurant([FromRoute] Guid productId, [FromBody] UpdateProductRequest updateProductRequest)
         {
             var product = await _productService
-                .GetProductByIdAsync(restaurantId, productId);
+                .GetProductByIdAsync(productId);
 
             /*var query = await _context.RestaurantCategories
                 .Where(x => x.Id == updateProductRequest
@@ -132,9 +132,9 @@ namespace ClicknEat.Controllers.V1
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
         [HttpDelete(ApiRoutes.Products.Delete)]
-        public async Task<IActionResult> DeteleRestaurant([FromRoute] Guid restaurantId, [FromRoute] Guid productId)
+        public async Task<IActionResult> DeteleRestaurant([FromRoute] Guid productId)
         {
-            var deleted = await _productService.DeleteProductAsync(restaurantId, productId);
+            var deleted = await _productService.DeleteProductAsync(productId);
 
             if (deleted)
                 return NoContent();

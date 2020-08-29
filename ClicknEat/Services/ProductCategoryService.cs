@@ -20,16 +20,16 @@ namespace ClicknEat.Services
         public async Task<List<ProductCategory>> GetAllAsync(Guid restaurantId)
         {
             return await _context.ProductCategories
-                .Where(x => x.Restaurant.Id == restaurantId)
-                .ToListAsync();
+                        .Where(x => x.RestaurantId == restaurantId)
+                        .ToListAsync();
         }
 
-        public async Task<List<ProductCategory>> GetProductCategoryAsync(Guid restaurantId, Guid productCategoryId)
+        public async Task<ProductCategory> GetProductCategoryAsync(Guid productCategoryId)
         {
             return await _context.ProductCategories
-                .Where(x => x.Restaurant.Id == restaurantId && x.Id == productCategoryId)
+                .Where(x => x.RestaurantId == x.Restaurant.Id && x.Id == productCategoryId)
                 .Include(x => x.Products)
-                .ToListAsync();
+                .FirstOrDefaultAsync();
         }
 
         public async Task<bool> CreateProductCategoryAsync(ProductCategory productCategory)
@@ -43,11 +43,11 @@ namespace ClicknEat.Services
             return created > 0;
         }
 
-        public async Task<ProductCategory> GetProductCategoryByIdAsync(Guid restaurantId, Guid productCategoryId)
+        public async Task<ProductCategory> GetProductCategoryByIdAsync(Guid productCategoryId)
         {
             return await _context.ProductCategories
-                .Where(x => x.Restaurant.Id == restaurantId && x.Id == productCategoryId)
-                .FirstOrDefaultAsync();
+                        .Where(x => x.RestaurantId == x.Restaurant.Id && x.Id == productCategoryId)
+                        .FirstOrDefaultAsync();
         }
 
         public async Task<bool> UpdateProductCategoryAsync(ProductCategory productCategoryToUpdate)
@@ -59,12 +59,13 @@ namespace ClicknEat.Services
                 .SaveChangesAsync();
 
             return updated > 0;
+
         }
 
-        public async Task<bool> DeleteProductCategoryAsync(Guid restaurantId, Guid productCategoryId)
+        public async Task<bool> DeleteProductCategoryAsync(Guid productCategoryId)
         {
             var productCategory = await _context.ProductCategories
-                .Where(x => x.Restaurant.Id == restaurantId && x.Id == productCategoryId)
+                .Where(x => x.RestaurantId == x.Restaurant.Id && x.Id == productCategoryId)
                 .Include(p => p.Products)
                 .FirstOrDefaultAsync();
 

@@ -1,4 +1,4 @@
-import { RestaurantsCategories } from './restaurantCategory.model';
+import { RestaurantsCategories, CategoryRestaurants } from './restaurantCategory.model';
 
 // GET RESTAURANTS
 export class Restaurants {
@@ -7,27 +7,27 @@ export class Restaurants {
   description: string;
 
   restaurantCategory: {
-      id: string,
-      restaurantCategoryName: string
+    id: string,
+    restaurantCategoryName: string
   };
 
   constructor(params?: any) {
-      this.id = params.id;
-      this.restaurantName = params.restaurantName;
-      this.description = params.description;
+    this.id = params.id;
+    this.restaurantName = params.restaurantName;
+    this.description = params.description;
 
-      this.restaurantCategory = {
-          id: params.restaurantCategory.id,
-          restaurantCategoryName: params.restaurantCategory.restaurantCategoryName
-      };
+    this.restaurantCategory = {
+      id: params.restaurantCategory.id,
+      restaurantCategoryName: params.restaurantCategory.restaurantCategoryName
+    };
   }
 }
 
 // CREATE RESTAURANT
-export class RestaurantAdd {
+export class RestaurantAddEdit {
   restaurantName: string;
   description: string;
-  restaurantCategory: RestaurantsCategories;
+  categoryToRestaurantRequest: RestaurantsCategories;
 }
 
 // GET RESTAURANT
@@ -57,12 +57,11 @@ export class Restaurant {
   }
 }
 
-// MAPPED RESTAURANT PRODUCTS CATEGORIES
-
-// GET MAPPED RESTAURANT PRODUCTS
 export class Products {
-  id: string;
+  id: any;
+  restaurantId: string;
   productName: string;
+  price: number;
   description: string;
   productCategory: {
     id: string,
@@ -72,7 +71,9 @@ export class Products {
   constructor(params?: any) {
     this.id = params.id;
     this.productName = params.productName;
+    this.price = params.price;
     this.description = params.description;
+
     this.productCategory = {
       id: params.productCategory.id,
       productCategoryName: params.productCategory.productCategoryName
@@ -80,25 +81,28 @@ export class Products {
   }
 }
 
-// GET MAPPED PRODUCT CATEGORIES
 export class ProductCategories {
   id: string;
   productCategoryName: string;
 
   constructor(params?: any) {
-      this.id = params.id;
-      this.productCategoryName = params.productCategoryName;
+    this.id = params.id;
+    this.productCategoryName = params.productCategoryName;
   }
 }
 
-// GET MAPPED PRODUCT CATEGORY
 export class ProductCategory {
   id: string;
+  restaurantId: any;
   productCategoryName: string;
+  products?: Products[];
+
 
   constructor(params?: any) {
-      this.id = params.id;
-      this.productCategoryName = params.productCategoryName;
+    this.id = params.id;
+    this.restaurantId = params.restaurantId;
+    this.productCategoryName = params.productCategoryName;
+    this.products = params.products;
   }
 }
 

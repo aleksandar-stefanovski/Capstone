@@ -30,7 +30,7 @@ namespace ClicknEat.Contracts.V1
         {
             public const string GetAll = Base + "/RestaurantsCategories";
 
-            public const string Get = Base + "/RestaurantCategory/RestaurantCategory/{restaurantCategoryId}";
+            public const string Get = Base + "/RestaurantCategory/{restaurantCategoryId}";
 
             public const string Create = Base + "/Admin/CreateRestaurantsCategory";
 
@@ -41,28 +41,28 @@ namespace ClicknEat.Contracts.V1
 
         public static class Products
         {
-            public const string GetAll = Base + "/Restaurant/{restaurantId}/Products";
+            public const string GetAll = Base + "/{restaurantId}/Products";
 
-            public const string Get = Base + "/Restaurant/{restaurantId}/Product/{productId}";
+            public const string Get = Base + "/Product/{productId}";
 
-            public const string Create = Base + "/Admin/Restaurant/{restaurantId}/CreateProduct";
+            public const string Create = Base + "/Admin/{restaurantId}/CreateProduct";
 
-            public const string Update = Base + "/Admin/Restaurant/{restaurantId}/UpdateProduct/{productId}";
+            public const string Update = Base + "/Admin/UpdateProduct/{productId}";
 
-            public const string Delete = Base + "/Admin/Restaurant/{restaurantId}/DeleteProduct/{productId}";
+            public const string Delete = Base + "/Admin/DeleteProduct/{productId}";
         }
 
         public static class ProductsCategories
         {
-            public const string GetAll = Base + "/Restaurant/{restaurantId}/ProductsCategories";
+            public const string GetAll = Base + "/{restaurantId}/ProductsCategories";
 
-            public const string Get = Base + "/Restaurant/{restaurantId}/ProductCategory/{productCategoryId}";
+            public const string Get = Base + "/ProductCategory/{productCategoryId}";
 
-            public const string Create = Base + "/Admin/Restaurant/{restaurantId}/CreateProductCategory";
+            public const string Create = Base + "/Admin/{restaurantId}/CreateProductCategory";
 
-            public const string Update = Base + "/Admin/Restaurant/{restaurantId}UpdateProductCategory/{productCategoryId}";
+            public const string Update = Base + "/Admin/UpdateProductCategory/{productCategoryId}";
 
-            public const string Delete = Base + "/Admin/Restaurant/{restaurantId}/DeleteProductCategory/{productCategoryId}";
+            public const string Delete = Base + "/Admin/DeleteProductCategory/{productCategoryId}";
         }
 
         public static class Cart

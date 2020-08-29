@@ -32,7 +32,7 @@ export class EditRestaurantCategoryComponent implements OnInit {
     };
   }
 
-  editRestaurant(form: NgForm) {
+  editRestaurantCategory(form: NgForm) {
     this.restaurantCategoryService.updateRestaurantCategory(this.id, form.value).subscribe(res => {
       this.resetForm(form);
       this.goToRestaurantCat();
@@ -43,7 +43,7 @@ export class EditRestaurantCategoryComponent implements OnInit {
 
 
   onSubmit(form: NgForm) {
-    this.editRestaurant(form);
+    this.editRestaurantCategory(form);
   }
 
   goToRestaurantCat() {

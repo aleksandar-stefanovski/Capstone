@@ -41,11 +41,5 @@ export const navItems: INavData[] = [
     name: 'Profile',
     url: '/my-profile',
     icon: 'icon-user',
-  },
-  {
-    name: 'Logout',
-    url: 'log-out',
-    icon: 'icon-logout',
   }
-
 ];

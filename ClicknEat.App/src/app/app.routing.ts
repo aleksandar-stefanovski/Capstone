@@ -6,13 +6,17 @@ import { DefaultLayoutComponent } from './containers';
 
 import { P404Component } from './views/error/404.component';
 import { P500Component } from './views/error/500.component';
-import { LoginComponent } from './views/login/login.component';
-import { RegisterComponent } from './views/register/register.component';
+import { P400Component } from './views/error/400.component';
+import { RegisterComponent } from './identity/register/register.component';
+import { LoginComponent } from './identity/login/login.component';
+import { AuthGuard } from './identity/auth/auth.guard';
+import { P403Component } from './views/error/403.component';
+import { ClientLayoutComponent } from './containers/client-layout/client-layout.component';
 
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'dashboard',
+    redirectTo: 'home',
     pathMatch: 'full',
   },
   {
@@ -23,10 +27,24 @@ export const routes: Routes = [
     }
   },
   {
+    path: '400',
+    component: P400Component,
+    data: {
+      title: 'Page 400'
+    }
+  },
+  {
     path: '500',
     component: P500Component,
     data: {
       title: 'Page 500'
+    }
+  },
+  {
+    path: '403',
+    component: P403Component,
+    data: {
+      title: 'Page 403'
     }
   },
   {
@@ -45,8 +63,23 @@ export const routes: Routes = [
   },
   {
     path: '',
-    component: DefaultLayoutComponent,
+    component: ClientLayoutComponent,
     data: {
+      title: 'Home'
+    },
+    children: [
+      {
+        path: 'home',
+        loadChildren: () => import('./views/client/home/home.module').then(m => m.HomeModule)
+      }
+    ]
+  },
+  {
+    path: '',
+    component: DefaultLayoutComponent,
+    canActivate: [AuthGuard],
+    data: {
+      permittedRoles: ['Admin'],
       title: 'Home'
     },
     children: [
@@ -65,7 +98,7 @@ export const routes: Routes = [
       {
         path: 'restaurant-categories',
         loadChildren: () => import('./views/restaurants/restaurant-categories/restaurant-categories.module')
-        .then(m => m.RestaurantCategoriesModule)
+          .then(m => m.RestaurantCategoriesModule)
       }
     ]
   }

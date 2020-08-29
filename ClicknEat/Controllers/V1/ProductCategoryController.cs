@@ -48,18 +48,13 @@ namespace ClicknEat.Controllers.V1
         }
 
         [HttpGet(ApiRoutes.ProductsCategories.Get)]
-        public async Task<IActionResult> GetProductCategory([FromRoute] Guid restaurantId, [FromRoute] Guid productCategoryId)
+        public async Task<IActionResult> GetProductCategory([FromRoute] Guid productCategoryId)
         {
-            var productCategories = await _productCategoryService
-                .GetProductCategoryAsync(restaurantId, productCategoryId);
+            var productCategory = await _productCategoryService
+                .GetProductCategoryAsync(productCategoryId);
 
-            foreach (var item in productCategories)
-            {
-                if (item.Id != null && item.Id != Guid.Empty && item.Id == productCategoryId)
-                {
-                    return Ok(_mapper.Map<List<ProductCategory>, List<ProductCategoryListResponse>>(productCategories));
-                }
-            }
+            if (productCategory.Id != null && productCategory.Id != Guid.Empty && productCategory.Id == productCategoryId)
+                return Ok(new Response<ProductCategoryListResponse>(_mapper.Map<ProductCategoryListResponse>(productCategory)));
 
             /*return Ok(new Response<RestaurantResponse>(_mapper.Map<RestaurantResponse>(restaurant)));*/
             return NotFound();
@@ -89,10 +84,10 @@ namespace ClicknEat.Controllers.V1
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
         [HttpPut(ApiRoutes.ProductsCategories.Update)]
-        public async Task<IActionResult> UpdateProductCategory([FromRoute] Guid restaurantId, [FromRoute] Guid productCategoryId, [FromBody] UpdateProductCategoryRequest updateProductCategoryRequest)
+        public async Task<IActionResult> UpdateProductCategory([FromRoute] Guid productCategoryId, [FromBody] UpdateProductCategoryRequest updateProductCategoryRequest)
         {
             var productCategory = await _productCategoryService
-                .GetProductCategoryByIdAsync(restaurantId, productCategoryId);
+                .GetProductCategoryByIdAsync(productCategoryId);
 
             if (productCategory == null)
                 return BadRequest();
@@ -110,10 +105,10 @@ namespace ClicknEat.Controllers.V1
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
         [HttpDelete(ApiRoutes.ProductsCategories.Delete)]
-        public async Task<IActionResult> DeteleProductCategory([FromRoute] Guid restaurantId, [FromRoute] Guid productCategoryId)
+        public async Task<IActionResult> DeteleProductCategory([FromRoute] Guid productCategoryId)
         {
             var deleted = await _productCategoryService
-                .DeleteProductCategoryAsync(restaurantId, productCategoryId);
+                .DeleteProductCategoryAsync(productCategoryId);
 
             if (deleted)
                 return NoContent();

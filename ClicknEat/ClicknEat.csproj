@@ -61,6 +61,8 @@
     <Compile Remove="Data\Migrations\20200605221938_ShoppingCart Model v3.Designer.cs" />
     <Compile Remove="Data\Migrations\20200723190050_update shopping cart v2.cs" />
     <Compile Remove="Data\Migrations\20200723190050_update shopping cart v2.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200815163735_cascade-delete.cs" />
+    <Compile Remove="Data\Migrations\20200815163735_cascade-delete.Designer.cs" />
   </ItemGroup>
 
 

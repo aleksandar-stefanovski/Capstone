@@ -1,0 +1,38 @@
+<div class="app-body">
+    <main class="main d-flex align-items-center">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 mx-auto">
+                    <div class="card mx-4">
+                        <div class="card-body p-4">
+                            <form [formGroup]="identityService.formModel" autocomplete="off" (submit)="onSubmit()">
+                                <h1>Register</h1>
+                                <p class="text-muted">Create your account</p>
+
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="icon-user"></i></span>
+                                    </div>
+                                    <input type="email" class="form-control" placeholder="Email" formControlName="email" required>
+                                </div>
+
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="icon-lock"></i></span>
+                                    </div>
+                                    <input type="password" placeholder="Password" class="form-control" name="password" formControlName="password" required>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group col-md-8 offset-md-2">
+                                        <button type="submit" class="btn btn-success btn-block" [disabled]="!identityService.formModel.valid">Sign Up</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>

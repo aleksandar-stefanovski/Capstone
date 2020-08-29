@@ -30,6 +30,7 @@ export class AlertsComponent {
       msg: sanitizer.sanitize(SecurityContext.HTML, alert.msg)
     }));
   }
+  
   dismissible = true;
   alerts: any = [
     {

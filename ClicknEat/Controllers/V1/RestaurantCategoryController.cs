@@ -42,7 +42,7 @@ namespace ClicknEat.Controllers.V1
         }
 
         [HttpGet(ApiRoutes.RestaurantsCategories.Get)]
-        public async Task<IActionResult> GetRestaurantCategory([FromRoute] Guid restaurantCategoryId)
+        public async Task<IActionResult> GetRestaurantCategory([FromRoute] Guid restaurantCategoryId) 
         {
             var restaurantCategory = await _restaurantCategoryService
                 .GetRestaurantCategoryAsync(restaurantCategoryId);
@@ -65,7 +65,7 @@ namespace ClicknEat.Controllers.V1
             return NotFound();*/
         }
 
-        /*[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]*/
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
         [HttpPost(ApiRoutes.RestaurantsCategories.Create)]
         public async Task<IActionResult> CreateRestaurantCategory([FromBody] CreateRestaurantCategoryRequest createRestaurantCategoryRequest)
         {
@@ -85,7 +85,7 @@ namespace ClicknEat.Controllers.V1
             return Ok(new Response<RestaurantCategoryResponse>(_mapper.Map<RestaurantCategoryResponse>(restaurantCategory)));
         }
 
-        /*[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]*/
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
         [HttpPut(ApiRoutes.RestaurantsCategories.Update)]
         public async Task<IActionResult> UpdateRestaurantCategory([FromRoute] Guid restaurantCategoryId, [FromBody] UpdateRestaurantCategoryRequest updateRestaurantCategoryRequest)
         {
@@ -107,7 +107,7 @@ namespace ClicknEat.Controllers.V1
             return NotFound();
         }
 
-       /* [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]*/
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
         [HttpDelete(ApiRoutes.RestaurantsCategories.Delete)]
         public async Task<IActionResult> DeteleRestaurantCategory([FromRoute] Guid restaurantCategoryId)
         {

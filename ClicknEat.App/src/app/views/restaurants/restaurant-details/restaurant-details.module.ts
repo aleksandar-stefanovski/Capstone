@@ -7,7 +7,7 @@ import { RestaurantDetailsComponent } from './restaurant-details.component';
 @NgModule({
     imports: [
         CommonModule,
-        RestaurantDetailsRoutingModule,
+        RestaurantDetailsRoutingModule
     ],
     declarations: [RestaurantDetailsComponent]
 })

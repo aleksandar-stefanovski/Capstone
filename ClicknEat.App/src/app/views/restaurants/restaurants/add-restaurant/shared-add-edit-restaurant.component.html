@@ -1,25 +1,26 @@
-<div class="card">
+<div class="card animated fadeIn">
     <div class="card-header">Create Restaurant </div>
     <form #form="ngForm" (submit)="onSubmit(form)" autocomplete="off" class="ng-untouched ng-pristine ng-valid">
 
         <div class="card-body">
             <div class="form-group">
                 <label for="restaurant">Restaurant Name:</label>
-                <input autocomplete="text" class="form-control" id="restaurant" name="restaurantName" #restaurantName="ngModel" [(ngModel)]="restaurantAdd.restaurantName" placeholder="Enter Restaurant Name.." type="text" required>
+                <input autocomplete="text" class="form-control" id="restaurant" name="restaurantName" #restaurantName="ngModel" [(ngModel)]="restaurantAddEdit.restaurantName" placeholder="Enter Restaurant Name.." type="text" required>
                 <div class="validation-error" *ngIf="restaurantName.invalid && restaurantName.touched">This field is required.
                 </div>
             </div>
 
             <div class="form-group">
                 <label for="description">Description:</label>
-                <input autocomplete="text" class="form-control" id="description" name="description" #restaurantName="ngModel" [(ngModel)]="restaurantAdd.description" placeholder="Enter Description" type="text" required>
+                <input ng-value="desc" autocomplete="text" class="form-control" id="description" name="description" #description="ngModel" [(ngModel)]="restaurantAddEdit.description" placeholder="Enter Description" type="text" required>
             </div>
 
             <div class="form-group">
                 <label for="rest-Category">Restaurant Category</label>
-                <select name="restaurantCategory" [(ngModel)]="restaurantAdd.restaurantCategory" class="form-control form-control-sm " id="rest-Category" required>
+                <select name="categoryToRestaurantRequest" [(ngModel)]="restaurantAddEdit.categoryToRestaurantRequest" class="form-control form-control-sm " id="rest-Category" required>
+          <option selected disabled> Select a Category... </option>
           <option *ngFor="let category of restaurantCategories " [ngValue]="category">
-          {{category.id}}  {{ category.restaurantCategoryName }}
+            {{ category.restaurantCategoryName }}
           </option>
         </select>
             </div>
@@ -29,7 +30,7 @@
             <button type="submit " [disabled]="form.invalid " class="btn btn-sm btn-primary ">
         <i class="fa fa-dot-circle-o "></i>
         Submit</button>
-            <button class="btn btn-sm btn-danger " type="reset ">
+            <button class="btn btn-sm btn-danger " type="reset">
         <i class="fa fa-ban "></i>
         Reset</button>
         </div>

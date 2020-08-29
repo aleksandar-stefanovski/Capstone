@@ -1,0 +1,31 @@
+<nav class="animated fadeIn navbar navbar-expand-lg navbar-light row justify-content-end">
+    <button type=" button" [routerLink]="['add-product-category']" class="btn btn-success float-right">Add New
+    Product Category</button>
+</nav>
+
+<div class="animated fadeIn">
+    <div class="row">
+
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>No.</th>
+                    <th>Product Categories</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let res of productCategories; let i = index">
+                    <td>{{ i+1 }}.</td>
+                    <td>{{ res.productCategoryName }}</td>
+                    <td class="d-flex justify-content-around">
+                        <button type="button" [routerLink]="['product-category-details/' + res.id]" class="btn btn-info ">Details
+            </button>
+                        <button type="button " [routerLink]="['product-category-edit/' + res.id]" class="btn btn-warning ">Edit</button>
+                        <button type="button " (click)='deleteProductCategory(res.id)' class="btn btn-danger ">Delete</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -10,14 +10,14 @@ namespace ClicknEat.Services
     {
         Task<List<ProductCategory>> GetAllAsync(Guid restaurantId);
 
-        Task<List<ProductCategory>> GetProductCategoryAsync(Guid restaurantId, Guid productCategoryId);
+        Task<ProductCategory> GetProductCategoryAsync(Guid productCategoryId);
 
         Task<bool> CreateProductCategoryAsync(ProductCategory productCategory);
 
-        Task<ProductCategory> GetProductCategoryByIdAsync(Guid restaurantId, Guid productCategoryId);
+        Task<ProductCategory> GetProductCategoryByIdAsync(Guid productCategoryId);
 
         Task<bool> UpdateProductCategoryAsync(ProductCategory productCategoryToUpdate);
 
-        Task<bool> DeleteProductCategoryAsync(Guid restaurantId, Guid productCategoryId);
+        Task<bool> DeleteProductCategoryAsync(Guid productCategoryId);
     }
 }

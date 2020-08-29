@@ -88,6 +88,7 @@ namespace ClicknEat.Services
                 };
             }
 
+
             var hasValidPassword = await _userManager
                 .CheckPasswordAsync(user, password);
 
@@ -210,7 +211,7 @@ namespace ClicknEat.Services
                 new Claim(JwtRegisteredClaimNames.Sub, user.Email),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new Claim(JwtRegisteredClaimNames.Email, user.Email),
-                new Claim("id", user.Id)
+                new Claim("id", user.Id),
             };
 
             var userClaims = await _userManager.GetClaimsAsync(user);

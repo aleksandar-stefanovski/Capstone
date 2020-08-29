@@ -37,6 +37,7 @@ namespace ClicknEat.Controllers.V1
             _mapper = mapper;
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "User")]
         [HttpGet(ApiRoutes.Cart.Get)]
         public async Task<IActionResult> Get()
         {
@@ -55,6 +56,7 @@ namespace ClicknEat.Controllers.V1
             return Ok(new Response<ShoppingCartViewModel>(_mapper.Map<ShoppingCartViewModel>(sCVM)));
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "User")]
         [HttpPost(ApiRoutes.Cart.AddToCart)]
         public async Task<IActionResult> AddToShoppingCart(Guid productId)
         {
@@ -73,6 +75,8 @@ namespace ClicknEat.Controllers.V1
             return Created(locationUri, selectedProduct);
         }
 
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "User")]
         [HttpDelete(ApiRoutes.Cart.RemoveFromCart)]
         public async Task<IActionResult> RemoveFromShoppingCart([FromQuery] Guid productId)
         {

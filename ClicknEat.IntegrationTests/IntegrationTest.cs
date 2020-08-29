@@ -19,7 +19,6 @@ namespace ClicknEat.IntegrationTests
     public class IntegrationTest
     {
         protected readonly HttpClient TestClient;
-        private readonly IServiceProvider _serviceProvider;
 
         protected IntegrationTest()
         {

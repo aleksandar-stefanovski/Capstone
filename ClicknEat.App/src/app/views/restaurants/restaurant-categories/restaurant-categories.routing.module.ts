@@ -1,12 +1,15 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { RestaurantCategoriesComponent } from './restaurant-categories.component';
+import { AuthGuard } from '../../../identity/auth/auth.guard';
 
 const routes: Routes = [
     {
         path: '',
         component: RestaurantCategoriesComponent,
+        canActivate: [AuthGuard],
         data: {
+            permittedRoles: ['Admin'],
             title: 'Restaurant-categories'
         }
     },
