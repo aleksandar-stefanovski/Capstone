@@ -17,11 +17,9 @@ namespace ClicknEat.Contracts.V1.Responses
 
         public int Price { get; set; }
 
+        public string ImagePath { get; set; }
+
         public ProductCategoryResponse ProductCategory { get; set; }
 
-        /*public string ImagePath { get; set; }
-         
-
-        public ICollection<OrderDetail> OrderDetails { get; set; }*/
     }
 }

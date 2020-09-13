@@ -22,6 +22,8 @@ namespace ClicknEat.Domain
         [DataType(DataType.Text)]
         public string Description { get; set; }
 
+        public string RestaurantImagePath { get; set; }
+
         public RestaurantCategory RestaurantCategory { get; set; }
 
         public ICollection<ProductCategory> ProductCategories { get; set; }

@@ -12,4 +12,8 @@ import { RestaurantsComponent } from '../restaurants/restaurants/restaurants.com
 })
 
 export class DashboardComponent extends RestaurantsComponent {
+
+  public createImgPath = (serverPath: string) => {
+    return `https://localhost:5001/${serverPath}`;
+  }
 }

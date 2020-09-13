@@ -17,6 +17,8 @@ namespace ClicknEat.Controllers.V1
 
       Task<List<Order>> GetMyOrdersAsync(string userId);
 
+      Task<Order> GetByIdAsync(Guid orderId);
+
       Task<Order> GetOrderByIdAsync(Guid orderId);
 
       Task<bool> RemoveOrderAsync(Guid orderId);

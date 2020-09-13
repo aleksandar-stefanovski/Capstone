@@ -24,6 +24,8 @@ namespace ClicknEat.Contracts.V1
             public const string Update = "Admin/UpdateRestaurant/{restaurantId}";
 
             public const string Delete = "Admin/DeleteRestaurant/{restaurantId}";
+
+            public const string Upload = "Admin/Upload";
         }
 
         public static class RestaurantsCategories
@@ -71,7 +73,7 @@ namespace ClicknEat.Contracts.V1
 
             public const string Get = "";
 
-            public const string AddToCart = "";
+            public const string AddToCart = "{productId}";
 
             public const string RemoveFromCart = "";
 
@@ -92,6 +94,8 @@ namespace ClicknEat.Contracts.V1
 
         public static class Identity 
         {
+            public const string GetUser = Base + "/Identity/User";
+
             public const string Login = Base + "/Identity/Login";
 
             public const string Register = Base + "/Identity/Register";

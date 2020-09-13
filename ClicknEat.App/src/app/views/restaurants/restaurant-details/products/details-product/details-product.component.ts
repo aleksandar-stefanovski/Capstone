@@ -52,4 +52,7 @@ export class DetailsProductComponent implements OnInit {
     this.location.back();
   }
 
+  public createImgPath = (serverPath: string) => {
+    return `https://localhost:5001/${serverPath}`;
+  }
 }

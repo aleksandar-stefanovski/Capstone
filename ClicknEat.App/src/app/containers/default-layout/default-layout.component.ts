@@ -19,6 +19,6 @@ export class DefaultLayoutComponent {
 
   onLogout() {
     localStorage.removeItem('token');
-    this.router.navigate(['/login']);
+    this.router.navigate(['/home']);
   }
 }

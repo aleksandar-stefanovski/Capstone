@@ -5,6 +5,7 @@ export class Restaurants {
   id: string;
   restaurantName: string;
   description: string;
+  restaurantImagePath?: string;
 
   restaurantCategory: {
     id: string,
@@ -15,6 +16,7 @@ export class Restaurants {
     this.id = params.id;
     this.restaurantName = params.restaurantName;
     this.description = params.description;
+    this.restaurantImagePath = params.restaurantImagePath;
 
     this.restaurantCategory = {
       id: params.restaurantCategory.id,
@@ -27,6 +29,7 @@ export class Restaurants {
 export class RestaurantAddEdit {
   restaurantName: string;
   description: string;
+  restaurantImagePath: string;
   categoryToRestaurantRequest: RestaurantsCategories;
 }
 
@@ -35,6 +38,7 @@ export class Restaurant {
   id: string;
   restaurantName: string;
   description: string;
+  restaurantImagePath?: string;
   products?: Products[];
   productCategories?: ProductCategories[];
 
@@ -47,6 +51,7 @@ export class Restaurant {
     this.id = params.id;
     this.restaurantName = params.restaurantName;
     this.description = params.description;
+    this.restaurantImagePath = params.restaurantImagePath;
     this.productCategories = params.productCategories;
     this.products = params.products;
 
@@ -62,8 +67,9 @@ export class Products {
   restaurantId: string;
   productName: string;
   price: number;
+  imagePath: string;
   description: string;
-  productCategory: {
+  productCategory?: {
     id: string,
     productCategoryName: string
   };
@@ -72,6 +78,7 @@ export class Products {
     this.id = params.id;
     this.productName = params.productName;
     this.price = params.price;
+    this.imagePath = params.imagePath;
     this.description = params.description;
 
     this.productCategory = {

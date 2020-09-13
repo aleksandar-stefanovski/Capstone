@@ -59,4 +59,8 @@ export class HomeComponent implements OnInit {
   reset() {
     this.filterRestaurants = [...this.restaurants];
   }
+
+  public createImgPath = (serverPath: string) => {
+    return `https://localhost:5001/${serverPath}`;
+  }
 }

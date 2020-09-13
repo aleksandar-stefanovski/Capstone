@@ -21,18 +21,18 @@
             <div class="card">
                 <a [routerLink]="['/restaurant-details/' + res.id]" class="card-link-rm-style">
                     <div class="card-header">
-                        <img class="img-fluid" src="../../../assets/img/logo.png" alt="Restaurant-Image">
+                        <img style="width: 100%; height: 233.52px;" class="img-fluid" [src]="createImgPath(res.restaurantImagePath)" alt="Restaurant-Image ">
                     </div>
                 </a>
-                <div class="card-body">
-                    <h3 class="h3">
+                <div class="card-body ">
+                    <h3 class="h3 ">
                         {{ res.restaurantName }}
                     </h3>
-                    <h5 class="h6 mb-3">
+                    <h5 class="h6 mb-3 ">
                         {{ res.restaurantCategory.restaurantCategoryName }}
                     </h5>
-                    <p class="">
-                        {{ res.description.length > 100 ? res.description.substring(0,100)+"..." : res.description }}
+                    <p class=" ">
+                        {{ res.description.length > 100 ? res.description.substring(0,100)+"... " : res.description }}
                     </p>
                 </div>
             </div>

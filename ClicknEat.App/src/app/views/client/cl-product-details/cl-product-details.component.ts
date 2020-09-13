@@ -4,6 +4,8 @@ import { ProductsService } from '../../../services/products.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductCategory, Restaurant } from '../../../models/restaurant/restaurant.model';
 import { GetProduct } from '../../../models/product/product.model';
+import { CartService } from '../../../services/cart.service';
+import { ShoppingCart } from '../../../models/shopping-cart/shopping-cart.model';
 
 @Component({
   selector: 'app-cl-product-details',
@@ -13,14 +15,13 @@ import { GetProduct } from '../../../models/product/product.model';
 export class ClProductDetailsComponent implements OnInit {
 
   productId: string;
-
+  getShoppingCart: ShoppingCart;
   restaurant: Restaurant;
   product: GetProduct;
   productCategory: ProductCategory;
 
-
   constructor(private location: Location, private productsService: ProductsService,
-    private route: ActivatedRoute, private router: Router) {
+    private cartService: CartService, private route: ActivatedRoute, private router: Router) {
 
   }
 
@@ -40,7 +41,35 @@ export class ClProductDetailsComponent implements OnInit {
     });
   }
 
+
+  getCart() {
+    const test = this.cartService.getShoppingCart().subscribe((res) => {
+      this.getShoppingCart = res as ShoppingCart;
+    });
+
+    if (test) {
+      console.log('WORKS');
+    } else {
+      console.log('FALSE');
+    }
+  }
+
+  // addToCart(id: any) {
+
+  //   if (id === null) {
+  //     return console.log('Error');
+  //   } else {
+  //     this.cartService.createShoppingCart(id).subscribe((res) => {
+  //     });
+  //   }
+
+  // }
+
   goToRestaurantDetials() {
     this.location.back();
+  }
+
+  public createImgPath = (serverPath: string) => {
+    return `https://localhost:5001/${serverPath}`;
   }
 }

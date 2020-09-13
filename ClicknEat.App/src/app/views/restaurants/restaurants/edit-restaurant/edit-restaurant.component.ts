@@ -6,24 +6,37 @@ import { RestaurantService } from '../../../../services/restaurant.service';
 import { RestaurantAddEdit } from '../../../../models/restaurant/restaurant.model';
 import { RestaurantsCategories } from '../../../../models/restaurant/restaurantCategory.model';
 import { NgForm } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
+import { httpHeaders } from '../../../../../environments/environment';
 
 @Component({
   selector: 'app-edit-restaurant',
-  templateUrl: '../add-restaurant/shared-add-edit-restaurant.component.html',
-  styleUrls: ['../add-restaurant/shared-add-edit-restaurant.component.scss']
+  templateUrl: './edit-restaurant.component.html',
+  styleUrls: ['./edit-restaurant.component.scss']
 })
 export class EditRestaurantComponent implements OnInit {
 
+  endPoint = 'https://localhost:5001/api/v1/';
+
   id: string;
 
-  restaurantAddEdit: RestaurantAddEdit = new RestaurantAddEdit();
+  restaurantAddEdit: RestaurantAddEdit;
   restaurantCategories: RestaurantsCategories[];
 
-  constructor(private restaurantCategoryService: RestaurantCategoryService, private restaurantService: RestaurantService,
-    private route: ActivatedRoute, private router: Router) { }
+  public restaurantName?: string;
+  public description?: string;
+  public restaurantImagePath?: string;
+  public categoryToRestaurantRequest?: any;
+  public isCreate?: boolean;
+  public response?: { dbPath: '' };
+
+
+  constructor(private http: HttpClient, private restaurantCategoryService: RestaurantCategoryService,
+    private restaurantService: RestaurantService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
     this.id = this.route.snapshot.params['id'];
+    this.isCreate = true;
     this.getRestaurantCategories();
   }
 
@@ -36,28 +49,32 @@ export class EditRestaurantComponent implements OnInit {
     });
   }
 
-  resetForm(form?: NgForm) {
-    if (form != null) {
-      form.resetForm();
-    }
-    this.restaurantAddEdit = {
-      restaurantName: '',
-      description: '',
-      categoryToRestaurantRequest: null
-    };
-  }
+  public onUpdate = () => {
 
-  editRestaurant(form: NgForm) {
-    this.restaurantService.updateRestaurant(this.id, form.value).subscribe(res => {
-      this.resetForm(form);
-      this.goToRestaurants();
-    });
+    const test = this.http.put(this.endPoint + 'Restaurants/Admin/UpdateRestaurant/' + this.id,
+      JSON.stringify(this.restaurantAddEdit = {
+        restaurantName: this.restaurantName,
+        description: this.description,
+        categoryToRestaurantRequest: this.categoryToRestaurantRequest,
+        restaurantImagePath: this.response.dbPath
+      }), httpHeaders()).subscribe(res => {
+        this.goToRestaurants();
+        this.isCreate = false;
+      });
 
     console.log(this.restaurantAddEdit);
+    return test;
+
   }
 
-  onSubmit(form: NgForm) {
-    this.editRestaurant(form);
+  // createRestaurant(restaurant: RestaurantAddEdit): Observable<any> {
+  //   return this.http.post(this.endPoint + 'Restaurants/Admin/CreateRestaurant', JSON.stringify({
+  //     restaurant
+  //   }), httpHeaders());
+  // }
+
+  public uploadFinished = (event) => {
+    this.response = event;
   }
 
   goToRestaurants() {

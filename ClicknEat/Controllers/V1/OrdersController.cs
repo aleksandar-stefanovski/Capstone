@@ -108,13 +108,33 @@ namespace ClicknEat.Controllers.V1
             await _orderService.CreateOrder(order);
 
             var baseUrl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host.ToUriComponent()}";
-            var locationUri = baseUrl + ApiRoutes.Order.Get. Replace("{orderId}", order.Id.ToString());
+            var locationUri = baseUrl + ApiRoutes.Order.Get.Replace("{orderId}", order.Id.ToString());
 
             /*var locationUri = _uriService.GetCartUri(sCVM.ShoppingCart.Id.ToString());*/
             return Created(locationUri, new Response<OrderResponse>(_mapper.Map<OrderResponse>(order)));
         }
 
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin, User")]
+        [HttpGet(ApiRoutes.Order.Get)]
+        public async Task<IActionResult> GetOrder([FromRoute] Guid orderId)
+        {
+            var userId = HttpContext.GetUserId();
+            var findById = await _userManager.FindByIdAsync(userId);
+
+            var order = await _orderService
+                .GetByIdAsync(orderId);
+
+            if (findById.Id != userId)
+                return Unauthorized();
+
+            if (order.Id != null && order.Id != Guid.Empty && order.Id == orderId)
+                return Ok(new Response<OrderResponse>(_mapper.Map<OrderResponse>(order)));
+
+            return BadRequest();
+        }
+    
+
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
         [HttpDelete(ApiRoutes.Order.Remove)]
         public async Task<IActionResult> RemoveOrder([FromRoute] Guid orderId)
         {

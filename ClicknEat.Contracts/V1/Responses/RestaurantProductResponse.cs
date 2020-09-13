@@ -14,6 +14,8 @@ namespace ClicknEat.Contracts.V1.Responses
 
         public string Description { get; set; }
 
+        public string RestaurantImagePath { get; set; }
+
         public RestaurantCategoryResponse RestaurantCategory { get; set; }
 
         public ICollection<ProductResponse> Products { get; set; }

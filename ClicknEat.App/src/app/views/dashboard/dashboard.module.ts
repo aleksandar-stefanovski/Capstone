@@ -11,4 +11,8 @@ import { CommonModule } from '@angular/common';
   ],
   declarations: [DashboardComponent]
 })
-export class DashboardModule { }
+export class DashboardModule {
+  public createImgPath = (serverPath: string) => {
+    return `https://localhost:5001/${serverPath}`;
+  }
+ }

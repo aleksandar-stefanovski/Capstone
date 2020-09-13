@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using AutoMapper;
 using ClicknEat.Contracts.V1;
@@ -13,6 +15,7 @@ using ClicknEat.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -27,13 +30,15 @@ namespace ClicknEat.Controllers.V1
         private readonly IRestaurantService _restaurantService;
         private readonly IMapper _mapper;
         private readonly ApplicationDbContext _context;
+        private readonly IWebHostEnvironment _webHostEnvironment;
         /*private readonly IUriService _uriService;*/
 
-        public RestaurantsController(IRestaurantService restaurantService, IMapper mapper, ApplicationDbContext context)
+        public RestaurantsController(IRestaurantService restaurantService, IMapper mapper, ApplicationDbContext context, IWebHostEnvironment webHostEnvironment)
         {
             _restaurantService = restaurantService;
             _mapper = mapper;
             _context = context;
+            _webHostEnvironment = webHostEnvironment;
             /*_uriService = uriService;*/
         }
 
@@ -59,7 +64,7 @@ namespace ClicknEat.Controllers.V1
                 return Ok(new Response<RestaurantProductResponse>(_mapper.Map<RestaurantProductResponse>(restaurant)));
 
             return NotFound();
-                    /*return Ok(_mapper.Map<List<Restaurant>, List<RestaurantProductResponse>>(restaurant));*/
+            /*return Ok(_mapper.Map<List<Restaurant>, List<RestaurantProductResponse>>(restaurant));*/
         }
 
         /// <summary>
@@ -79,7 +84,7 @@ namespace ClicknEat.Controllers.V1
         /// </remarks>
         /// <response code="200">Returns all Restaurants in the system</response>
         /// <response code="400">Unable to create Restaurant</response>
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles ="Admin")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
         [HttpPost(ApiRoutes.Restaurants.Create)]
         public async Task<IActionResult> CreateRestaurant([FromBody] CreateRestaurantRequest createRestaurantRequest)
         {
@@ -98,7 +103,8 @@ namespace ClicknEat.Controllers.V1
                 Id = newRestaurantId,
                 RestaurantName = createRestaurantRequest.RestaurantName,
                 Description = createRestaurantRequest.Description,
-                RestaurantCategory = _mapper.Map<RestaurantCategory>(query)
+                RestaurantCategory = _mapper.Map<RestaurantCategory>(query),
+                RestaurantImagePath = createRestaurantRequest.RestaurantImagePath
             };
 
             if (restaurant == null)
@@ -116,13 +122,13 @@ namespace ClicknEat.Controllers.V1
         [HttpPut(ApiRoutes.Restaurants.Update)]
         public async Task<IActionResult> UpdateRestaurant([FromRoute] Guid restaurantId, [FromBody] UpdateRestaurantRequest updateRestaurantRequest)
         {
-      /*      var userOwnsRestaurant = await _restaurantService
-                .UserOwnsRestaurantAsync(restaurantId, HttpContext.GetUserId());
+            /*      var userOwnsRestaurant = await _restaurantService
+                      .UserOwnsRestaurantAsync(restaurantId, HttpContext.GetUserId());
 
-            if (!userOwnsRestaurant)
-            {
-                return BadRequest();
-            }*/
+                  if (!userOwnsRestaurant)
+                  {
+                      return BadRequest();
+                  }*/
 
             var restaurant = await _restaurantService
                 .GetRestaurantByIdAsync(restaurantId);
@@ -138,6 +144,13 @@ namespace ClicknEat.Controllers.V1
             restaurant.RestaurantName = updateRestaurantRequest.RestaurantName;
             restaurant.Description = updateRestaurantRequest.Description;
             restaurant.RestaurantCategory = query;
+            if (updateRestaurantRequest.RestaurantImagePath != null)
+            {
+                if (updateRestaurantRequest.RestaurantImagePath != null)
+                {
+                restaurant.RestaurantImagePath = updateRestaurantRequest.RestaurantImagePath;
+                }
+            }
 
             var updated = await _restaurantService
                 .UpdateRestaurantAsync(restaurant);
@@ -145,20 +158,20 @@ namespace ClicknEat.Controllers.V1
             if (updated)
                 return Ok(new Response<RestaurantResponse>(_mapper.Map<RestaurantResponse>(restaurant)));
 
-                return BadRequest();
+            return BadRequest();
         }
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
         [HttpDelete(ApiRoutes.Restaurants.Delete)]
         public async Task<IActionResult> DeteleRestaurant([FromRoute] Guid restaurantId)
         {
-          /*  var userOwnsRestaurant = await _restaurantService
-            .UserOwnsRestaurantAsync(restaurantId, HttpContext.GetUserId());
+            /*  var userOwnsRestaurant = await _restaurantService
+              .UserOwnsRestaurantAsync(restaurantId, HttpContext.GetUserId());
 
-            if (!userOwnsRestaurant)
-            {
-                return BadRequest();
-            }*/
+              if (!userOwnsRestaurant)
+              {
+                  return BadRequest();
+              }*/
 
             var deleted = await _restaurantService
                 .DeleteRestaurantAsync(restaurantId);
@@ -168,5 +181,57 @@ namespace ClicknEat.Controllers.V1
 
             return BadRequest();
         }
+
+        [HttpPost(ApiRoutes.Restaurants.Upload), DisableRequestSizeLimit]
+        public IActionResult Upload()
+        {
+            try
+            {
+                var file = Request.Form.Files[0];
+                var folderName = Path.Combine("Resources", "Images");
+                var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
+
+                if (file.Length > 0)
+                {
+                    var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
+                    var fullPath = Path.Combine(pathToSave, fileName);
+                    var dbPath = Path.Combine(folderName, fileName);
+
+                    using (var stream = new FileStream(fullPath, FileMode.Create))
+                    {
+                        file.CopyTo(stream);
+                    }
+
+                    return Ok(new { dbPath });
+                }
+                else
+                {
+                    return BadRequest();
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex}");
+            }
+        }
     }
 }
+
+       /* private string ProcessUploadedFile(CreateRestaurantRequest restaurantRequest)
+        {
+            string uniqueFileName = null;
+            if (restaurantRequest.RestaurantImagePath != null)
+            {
+                string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "images");
+                uniqueFileName = Guid.NewGuid().ToString() + "_" + restaurantRequest.RestaurantImagePath.FileName;
+                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    restaurantRequest.RestaurantImagePath.CopyTo(fileStream);
+                }
+            }
+
+            return uniqueFileName;
+        }
+    }*/

@@ -6,40 +6,31 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ProductsService } from '../../../../../services/products.service';
 import { ProductCategoryService } from '../../../../../services/product-category.service';
 import { AddProductComponent } from '../add-product/add-product.component';
+import { httpHeaders } from '../../../../../../environments/environment';
 
 @Component({
   selector: 'app-edit-product',
-  templateUrl: '../add-product/shared-add-edit-product.component.html',
-  styleUrls: ['./edit-product.component.scss']
+  templateUrl: 'edit-product.component.html',
+  styleUrls: ['edit-product.component.scss']
 })
 export class EditProductComponent extends AddProductComponent{
 
   productId: any;
-  productAddEdit: ProductAddEdit = new ProductAddEdit();
+  productAddEdit: ProductAddEdit;
   productCategories: ProductCategories[];
 
-resetForm(form ?: NgForm) {
-  if (form != null) {
-    form.resetForm();
-  }
-  this.productAddEdit = {
-    productName: '',
-    description: '',
-    price: null,
-    categoryToProductRequest: null
-  };
-}
+public onUpdate = () => {
 
-updateProduct(form: NgForm) {
-  console.log('EXAMPLE', form.value);
-  this.productsService.updateProduct(form.value, this.productId).subscribe(res => {
-    this.resetForm(form);
-    this.goToRestaurants();
-  });
+  return this.http.put(this.endPoint + `Admin/UpdateProduct/${this.productId}`,
+    JSON.stringify(this.productAddEdit = {
+      productName: this.productName,
+      description: this.description,
+      price: this.price,
+      imagePath: this.response.dbPath,
+      categoryToProductRequest: this.categoryToProductRequest
+    }), httpHeaders()).subscribe(res => {
+      this.goToRestaurants();
+      this.isCreate = false;
+    });
 }
-
-onSubmit(form: NgForm) {
-  this.updateProduct(form);
-}
-
 }

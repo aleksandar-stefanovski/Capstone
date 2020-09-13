@@ -188,6 +188,9 @@ namespace ClicknEat.Data.Migrations
                     b.Property<Guid?>("RestaurantCategoryId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("RestaurantImagePath")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("RestaurantName")
                         .IsRequired()
                         .HasColumnType("nvarchar(80)")

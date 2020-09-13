@@ -94,4 +94,10 @@
     <ProjectReference Include="..\ClicknEat.Contracts\ClicknEat.Contracts.csproj" />
   </ItemGroup>
 
+
+  <ItemGroup>
+    <Folder Include="Resources\Images\" />
+    <Folder Include="wwwroot\images\" />
+  </ItemGroup>
+
 </Project>

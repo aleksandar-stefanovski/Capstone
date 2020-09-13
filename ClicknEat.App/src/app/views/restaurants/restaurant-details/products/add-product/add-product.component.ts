@@ -6,27 +6,40 @@ import { ProductCategoryService } from '../../../../../services/product-category
 import { Router, ActivatedRoute } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { ProductAddEdit } from '../../../../../models/product/product.model';
+import { HttpClient } from '@angular/common/http';
+import { httpHeaders } from '../../../../../../environments/environment';
 
 @Component({
   selector: 'app-add-product',
-  templateUrl: './shared-add-edit-product.component.html',
+  templateUrl: './add-product.component.html',
   styleUrls: ['./add-product.component.scss']
 })
 export class AddProductComponent implements OnInit {
 
+  endPoint = 'https://localhost:5001/api/v1/';
+
   id: any;
   productId: any;
-  productAddEdit: ProductAddEdit = new ProductAddEdit();
+
+  productAddEdit: ProductAddEdit;
   productCategories: ProductCategories[];
 
-  constructor(public productsService: ProductsService, public productCategoryService: ProductCategoryService,
-    public route: ActivatedRoute, public router: Router) { }
+  public productName?: string;
+  public description?: string;
+  public price?: number;
+  public imagePath?: string;
+  public categoryToProductRequest?: any;
+  public isCreate?: boolean;
+  public response?: { dbPath: '' };
+
+  constructor(public http: HttpClient, public productsService: ProductsService,
+    public productCategoryService: ProductCategoryService,public route: ActivatedRoute, public router: Router) { }
+
 
   ngOnInit(): void {
+    this.isCreate = true;
     this.productId = this.route.snapshot.params['productId'];
     this.getProductCategories();
-    console.log('TESTT:', this.productAddEdit);
-    console.log('TESTT2222:', this.productCategories);
   }
 
   getProductCategories() {
@@ -39,31 +52,26 @@ export class AddProductComponent implements OnInit {
     });
   }
 
-  resetForm(form?: NgForm) {
-    if (form != null) {
-      form.resetForm();
-    }
-    this.productAddEdit = {
-      productName: '',
-      description: '',
-      price: null,
-      categoryToProductRequest: null
-    };
-  }
-
-  createProduct(form: NgForm) {
-    console.log('EXAMPLE', form.value);
-    this.productsService.createProduct(this.id, form.value).subscribe(res => {
-      this.resetForm(form);
-      this.goToRestaurants();
-    });
-  }
-
-  onSubmit(form: NgForm) {
-    this.createProduct(form);
-  }
-
   goToRestaurants() {
     this.router.navigate(['/restaurant-details/' + this.id]);
   }
+
+  public onCreate = () => {
+    return this.http.post(this.endPoint + `Admin/${this.id}/CreateProduct`,
+      JSON.stringify(this.productAddEdit = {
+        productName: this.productName,
+        description: this.description,
+        price: this.price,
+        categoryToProductRequest: this.categoryToProductRequest,
+        imagePath: this.response.dbPath
+      }), httpHeaders()).subscribe(res => {
+        this.goToRestaurants();
+        this.isCreate = false;
+      });
+  }
+
+  public uploadFinished = (event) => {
+    this.response = event;
+  }
+
 }

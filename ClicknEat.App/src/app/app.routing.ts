@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, OnInit } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 // Import Containers
@@ -13,11 +13,29 @@ import { AuthGuard } from './identity/auth/auth.guard';
 import { P403Component } from './views/error/403.component';
 import { ClientLayoutComponent } from './containers/client-layout/client-layout.component';
 
+// export function IsLogged() {
+//   const jwt = localStorage.getItem('token');
+//   if (jwt != null) {
+//     const jwtData = jwt.split('.')[1];
+//     const decodedJwtJsonData = window.atob(jwtData);
+//     const decodedJwtData = JSON.parse(decodedJwtJsonData);
+//     const role = decodedJwtData.role;
+
+//     if (role === 'Admin') {
+//       return 'dashboard';
+//     } else if (role === 'User') {
+//       return 'home';
+//     } else {
+//       return 'home';
+//     }
+//   }
+// }
+
 export const routes: Routes = [
   {
     path: '',
     redirectTo: 'home',
-    pathMatch: 'full',
+    pathMatch: 'full'
   },
   {
     path: '404',
@@ -71,6 +89,11 @@ export const routes: Routes = [
       {
         path: 'home',
         loadChildren: () => import('./views/client/home/home.module').then(m => m.HomeModule)
+      },
+      {
+        path: 'my-orders',
+        loadChildren: () => import('./views/profile/profile.module')
+          .then(m => m.ProfileModule)
       }
     ]
   },
@@ -99,6 +122,11 @@ export const routes: Routes = [
         path: 'restaurant-categories',
         loadChildren: () => import('./views/restaurants/restaurant-categories/restaurant-categories.module')
           .then(m => m.RestaurantCategoriesModule)
+      },
+      {
+        path: 'orders',
+        loadChildren: () => import('./views/orders/orders.module')
+          .then(m => m.OrdersModule)
       }
     ]
   }
@@ -108,4 +136,6 @@ export const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+
+}

@@ -9,6 +9,10 @@ import { IdentityService } from '../../services/identity.service';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
+  logged = localStorage.getItem('token');
+
+  isLoggedIn = this.logged ? 'Logout' : 'Login';
+  isRegistered = this.logged ? '' : 'Register';
 
   formModel = {
     email: '',
@@ -51,5 +55,15 @@ export class LoginComponent implements OnInit {
         }
       }
     );
+  }
+
+    onRegister() {
+      localStorage.removeItem('token');
+    this.router.navigate(['/register']);
+    }
+
+    onLogout() {
+    localStorage.removeItem('token');
+    this.router.navigate(['/login']);
   }
 }

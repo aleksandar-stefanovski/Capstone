@@ -1,0 +1,49 @@
+<div class="animated fadeIn">
+    <div class="row">
+
+        <div class="card">
+            <div class="card-body">
+                <h5 class="h5">Full Name</h5>
+                <p class="p">{{ orders?.fullName }}</p>
+                <h5 class="h5">Address</h5>
+                <p class="p">{{ orders?.address }}</p>
+                <h5 class="h5">Phone Number</h5>
+                <p class="p">{{ orders?.phoneNumber }}</p>
+                <h5 class="h5">Email</h5>
+                <p class="p">{{ orders?.email }}</p>
+                <h5 class="h5">Order Placed</h5>
+                <p class="p">{{ orders?.orderPlaced.length > 10 ? orders?.orderPlaced.substring(0,10)+"" : orders?.orderPlaced }}</p>
+                <h5 class="h5">Order Total</h5>
+                <p class="p">{{ orders?.orderTotal }} Den.</p>
+            </div>
+        </div>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Product Name</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let details of orders?.orderDetails">
+                    <td>
+                        {{details?.product.productName}}
+                    </td>
+                    <td>
+                        {{details?.product.price}} Den.
+                    </td>
+                    <td>
+                        {{details?.quantity}}
+                    </td>
+                    <td>
+                        {{details?.product.description.length > 32 ? details?.product.description.substring(0,32)+"..." : details?.product.description}}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+</div>

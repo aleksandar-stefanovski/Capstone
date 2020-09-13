@@ -24,6 +24,8 @@ namespace ClicknEat.Services
          public async Task<List<Order>> GetOrdersAsync()
         {
             var orders = await _context.Orders
+               .Include(x => x.OrderDetails)
+               .ThenInclude(p => p.Product)
                .ToListAsync();
 
             if (orders == null)
@@ -62,8 +64,23 @@ namespace ClicknEat.Services
         public async Task<Order> GetOrderByIdAsync(Guid orderId)
         {
             var order = await _context.Orders
-               .AsNoTracking()
                .Where(x => x.Id == orderId)
+               .FirstOrDefaultAsync();
+
+            if (order == null)
+            {
+                return null;
+            }
+
+            return order;
+        }
+
+        public async Task<Order> GetByIdAsync(Guid orderId)
+        {
+            var order = await _context.Orders
+               .Where(x => x.Id == orderId)
+               .Include(d=>d.OrderDetails)
+               .ThenInclude(p=>p.Product)
                .FirstOrDefaultAsync();
 
             if (order == null)
@@ -88,7 +105,7 @@ namespace ClicknEat.Services
                     Quantity = item.Quantity,
                     ProductId = item.Product.Id,
                     OrderId = order.Id,
-                    Price = item.Product.Price
+                    Price = item.Product.Price,
                 };
 
                 await _context.OrderDetails
@@ -103,7 +120,9 @@ namespace ClicknEat.Services
 
         public async Task<bool> RemoveOrderAsync(Guid orderId)
         {
-            var order = GetOrderByIdAsync(orderId);
+            var order = await _context.Orders
+               .Where(x => x.Id == orderId)
+               .FirstOrDefaultAsync();
 
             if (order == null)
                 return false;

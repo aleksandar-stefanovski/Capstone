@@ -22,3 +22,32 @@ export function httpHeaders(): any {
 
   return options;
 }
+
+// export function httpHeadersAuth(): any {
+//   const headers = new Headers();
+//   headers.append('', '');
+
+//   const options = {
+//     headers: new HttpHeaders({
+//       'Content-Type': 'application/json',
+//       'Authorization': sessionStorage.getItem('.AspNetCore.Session')
+//     })
+//   };
+
+//   return options;
+// }
+
+export const httpOptionsWCredentials = () => {
+  const headers = new Headers();
+  headers.append('Access-Control-Allow-Origin', 'true');
+  headers.append('Content-Type', 'application/json');
+
+  const options = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+    }),
+    withCredentials: true
+  };
+
+  return options;
+};

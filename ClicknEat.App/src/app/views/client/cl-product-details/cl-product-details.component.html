@@ -3,7 +3,7 @@
         <div class="col-sm-6 col-md-12">
             <div class="d-flex">
                 <div class="card-header">
-                    <img class="img-fluid" src="../../../assets/img/logo.png" alt="Restaurant-Image">
+                    <img class="img-fluid" style="width: 700px; max-height: auto;" [src]="createImgPath(product?.data.imagePath)" alt="Restaurant-Image">
                 </div>
                 <div class="card-body align-self-end">
                     <h3 class="h3">
@@ -13,13 +13,14 @@
                         {{ product?.data.price }} Den.
 
                     </h5>
-                    <p class="">
+                    <p class="p">
                         {{ product?.data.description.length > 32 ? product?.data.description.substring(0,32)+"..." : product?.data.description }}
                     </p>
-                    <button class="btn btn-warning m-0">
-                        <i class="cui-cart icons font-1xl"></i>
-                        Add to Cart
-                      </button>
+                    <button type="button" (click)="addToCart(product?.data.id)" class="btn btn-warning m-0">
+            <i class="cui-cart icons font-1xl"></i>
+            Add to Cart
+          </button>
+
                 </div>
             </div>
         </div>

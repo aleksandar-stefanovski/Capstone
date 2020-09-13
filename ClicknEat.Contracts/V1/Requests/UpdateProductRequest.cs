@@ -11,7 +11,11 @@ namespace ClicknEat.Contracts.V1.Requests
 
         public string Description { get; set; }
 
+        public string ImagePath { get; set; }
+
         public int Price { get; set; }
+
+        public CategoryToProductRequest CategoryToProductRequest { get; set; }
 
         /*public string ImagePath { get; set; }*/
 

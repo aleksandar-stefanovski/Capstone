@@ -55,4 +55,11 @@ export class ClRestaurantDetailsComponent implements OnInit {
     this.filterData = [...this.products];
   }
 
+  public createImgPath = (serverPath: string) => {
+    return `https://localhost:5001/${serverPath}`;
+  }
+
+  public createImgPath2 = (serverPath: string) => {
+    return `https://localhost:5001/${serverPath}`;
+  }
 }

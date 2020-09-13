@@ -91,6 +91,7 @@ namespace ClicknEat.Controllers.V1
                 ProductName = createProductRequest.ProductName,
                 Description = createProductRequest.Description,
                 Price = createProductRequest.Price,
+                ImagePath = createProductRequest.ImagePath,
                 RestaurantId = restaurantId,
                 ProductCategory = query
             };
@@ -109,10 +110,10 @@ namespace ClicknEat.Controllers.V1
             var product = await _productService
                 .GetProductByIdAsync(productId);
 
-            /*var query = await _context.RestaurantCategories
+            var query = await _context.ProductCategories
                 .Where(x => x.Id == updateProductRequest
-                .CategoryToRestaurantRequest.Id)
-                .FirstOrDefaultAsync();*/
+                .CategoryToProductRequest.Id)
+                .FirstOrDefaultAsync();
 
             if (product == null)
                 return BadRequest();
@@ -120,6 +121,14 @@ namespace ClicknEat.Controllers.V1
             product.ProductName = updateProductRequest.ProductName;
             product.Description = updateProductRequest.Description;
             product.Price = updateProductRequest.Price;
+            product.ProductCategory = query;
+            if (updateProductRequest.ImagePath != null)
+            {
+                if (updateProductRequest.ImagePath != null)
+                {
+                    product.ImagePath = updateProductRequest.ImagePath;
+                }
+            }
 
             var updated = await _productService
                 .UpdateProductAsync(product);

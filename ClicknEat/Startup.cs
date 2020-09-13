@@ -19,6 +19,10 @@ using Microsoft.AspNetCore.Mvc;
 using ClicknEat.Installers;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Net.Http.Headers;
+using Microsoft.AspNetCore.Http.Features;
+using Microsoft.Extensions.FileProviders;
+using System.IO;
+using Microsoft.AspNetCore.Http;
 
 namespace ClicknEat
 {
@@ -37,6 +41,7 @@ namespace ClicknEat
         {
             services.InstallServicesInAssembly(Configuration);
 
+
             services.AddCors(options =>
             {
                 options.AddPolicy(MyAllowSpecificOrigins,
@@ -49,7 +54,14 @@ namespace ClicknEat
             });
 
             services.AddControllers();
+
+            services.Configure<FormOptions>(o => {
+                o.ValueLengthLimit = int.MaxValue;
+                o.MultipartBodyLengthLimit = int.MaxValue;
+                o.MemoryBufferThreshold = int.MaxValue;
+            });
         }
+
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
@@ -64,6 +76,11 @@ namespace ClicknEat
             app.UseHttpsRedirection();
             app.UseCors(MyAllowSpecificOrigins);
             app.UseStaticFiles();
+            app.UseStaticFiles(new StaticFileOptions()
+            {
+                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"Resources")),
+                RequestPath = new PathString("/Resources")
+            });
 
             app.UseAuthentication();
             app.UseSession();

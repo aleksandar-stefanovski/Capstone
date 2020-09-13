@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { AddProductRoutingModule } from './add-product.routing.module';
 import { AddProductComponent } from './add-product.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { UploadProductImgComponent } from '../../../../upload/upload-product-img/upload.component';
 
 @NgModule({
     imports: [
@@ -12,7 +13,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
         FormsModule,
         ReactiveFormsModule
     ],
-    declarations: [AddProductComponent]
+    declarations: [AddProductComponent, UploadProductImgComponent]
 })
 
 export class AddProductModule { }

@@ -7,14 +7,28 @@ import { Router } from '@angular/router';
   templateUrl: './client-layout.component.html'
 })
 export class ClientLayoutComponent {
+
+  constructor(private router: Router) {
+  }
   public sidebarMinimized = false;
   public navItems = navItems;
+
+
+  logged = localStorage.getItem('token');
+
+  hideElement = this.logged ? 'display: block' : 'display: none;';
+
+  isLoggedIn = this.logged ? 'Logout' : 'Login';
+  isRegistered = this.logged ? '' : 'Register';
 
   toggleMinimize(e) {
     this.sidebarMinimized = e;
   }
 
-  constructor(private router: Router) {
+
+  onRegister() {
+    localStorage.removeItem('token');
+    this.router.navigate(['/register']);
   }
 
   onLogout() {

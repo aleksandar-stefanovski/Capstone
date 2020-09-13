@@ -12,6 +12,20 @@ const routes: Routes = [
             permittedRoles: ['Admin'],
             title: 'Details-restaurant-category'
         }
+    },
+    {
+        path: '',
+        data: {
+            title: 'Restaurants'
+        },
+
+        children: [
+            // {
+            //     path: 'edit-restaurant/:id',
+            //     loadChildren: () => import('../../restaurants/edit-restaurant/edit-restaurant.module')
+            //         .then(m => m.EditRestaurantModule)
+            // }
+        ]
     }
 ];
 

@@ -21,15 +21,14 @@ const routes: Routes = [
     children: [
       {
         path: 'add-restaurant',
-        loadChildren: () => import('../restaurants/add-restaurant/add-restaurant.module')
+        loadChildren: () => import('./add-restaurant/add-restaurant.module')
           .then(m => m.AddRestaurantModule)
       },
       {
         path: 'edit-restaurant/:id',
-        loadChildren: () => import('../restaurants/edit-restaurant/edit-restaurant.module')
+        loadChildren: () => import('./edit-restaurant/edit-restaurant.module')
           .then(m => m.EditRestaurantModule)
       }
-
     ]
   }
 ];

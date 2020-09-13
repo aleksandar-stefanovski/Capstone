@@ -1,3 +1,31 @@
+<script>
+    $('.carousel').carousel()
+</script>
+<div id="carouselExampleInterval" class="carousel slide" data-ride="carousel">
+    <div class="carousel-inner">
+        <div class="carousel-item active" data-interval="10000">
+            <svg class="bd-placeholder-img bd-placeholder-img-lg d-block w-100" width="800" height="400" xmlns="http://www.w3.org/2000/svg" aria-label="Placeholder: First slide" preserveAspectRatio="xMidYMid slice" role="img"><title>Placeholder</title><rect width="100%" height="100%" fill="#777"/><text x="50%" y="50%" fill="#555" dy=".3em">First slide</text></svg>
+
+        </div>
+        <div class="carousel-item" data-interval="2000">
+            <svg class="bd-placeholder-img bd-placeholder-img-lg d-block w-100" width="800" height="400" xmlns="http://www.w3.org/2000/svg" aria-label="Placeholder: Second slide" preserveAspectRatio="xMidYMid slice" role="img"><title>Placeholder</title><rect width="100%" height="100%" fill="#666"/><text x="50%" y="50%" fill="#444" dy=".3em">Second slide</text></svg>
+
+        </div>
+        <div class="carousel-item">
+            <svg class="bd-placeholder-img bd-placeholder-img-lg d-block w-100" width="800" height="400" xmlns="http://www.w3.org/2000/svg" aria-label="Placeholder: Third slide" preserveAspectRatio="xMidYMid slice" role="img"><title>Placeholder</title><rect width="100%" height="100%" fill="#555"/><text x="50%" y="50%" fill="#333" dy=".3em">Third slide</text></svg>
+
+        </div>
+    </div>
+    <a class="carousel-control-prev" href="#carouselExampleInterval" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#carouselExampleInterval" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+    </a>
+</div>
+
 <nav class="animated fadeIn navbar navbar-expand-lg navbar-light">
     <div class="row">
         <div class="text-center">
@@ -21,7 +49,7 @@
             <div class="card">
                 <a [routerLink]="['restaurant/' + res.id]" class="card-link-rm-style">
                     <div class="card-header">
-                        <img class="img-fluid" src="../../../assets/img/logo.png" alt="Restaurant-Image">
+                        <img style="width: 100%; height: 233.52px;" class="img-fluid" [src]="createImgPath(res.restaurantImagePath)" alt="Restaurant-Image">
                     </div>
                 </a>
                 <div class="card-body">

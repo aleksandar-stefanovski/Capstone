@@ -3,7 +3,7 @@
         <div class="col-sm-6 col-md-12">
             <div class="d-flex">
                 <div class="card-header">
-                    <img class="img-fluid" src="../../../assets/img/logo.png" alt="Restaurant-Image">
+                    <img class="img-fluid" style="width: 100%; max-height: auto;" [src]="createImgPath(restaurant?.restaurantImagePath)" alt="Restaurant-Image">
                 </div>
                 <div class="card-body align-self-end">
                     <h3 class="h3">
@@ -42,7 +42,7 @@
             <div class="card">
                 <a [routerLink]="['product/' + product.id]" class="card-link-rm-style">
                     <div class="card-header">
-                        <img class="img-fluid" src="../../../assets/img/logo.png" alt="Restaurant-Image">
+                        <img class="img-fluid" style="width: 100%; height: 233.52px;" [src]="createImgPath2(product?.imagePath)" alt="Product-Image">
                     </div>
                 </a>
                 <div class="card-body">

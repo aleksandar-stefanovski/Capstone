@@ -67,4 +67,8 @@ export class RestaurantDetailsComponent implements OnInit {
       this.products.splice(this.products.indexOf(deletedContrat), 1);
     });
   }
+
+  public createImgPath = (serverPath: string) => {
+    return `https://localhost:5001/${serverPath}`;
+  }
 }

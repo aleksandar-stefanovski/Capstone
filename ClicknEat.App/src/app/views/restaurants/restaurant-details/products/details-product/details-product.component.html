@@ -1,26 +1,26 @@
 <div class="animated fadeIn">
-  <div class="row">
-    <div class="col-sm-6 col-md-12">
-      <div class="d-flex">
-        <div class="card-header">
-          <img class="img-fluid" src="../../../assets/img/logo.png" alt="Restaurant-Image">
-        </div>
-        <div class="card-body align-self-end">
-          <h3 class="h3">
-            {{ product?.data.productName }}
-          </h3>
-          <h5 class="h6 mb-3">
-            {{ product?.data.price }} Den.
+    <div class="row">
+        <div class="col-sm-6 col-md-12">
+            <div class="d-flex">
+                <div class="card-header">
+                    <img style="max-width: 800px; max-height: auto;" class="img-fluid" [src]="createImgPath(product?.data.imagePath)" alt="Restaurant-Image">
+                </div>
+                <div class="card-body align-self-end">
+                    <h3 class="h3">
+                        {{ product?.data.productName }}
+                    </h3>
+                    <h5 class="h6 mb-3">
+                        {{ product?.data.price }} Den.
 
-          </h5>
-          <p class="">
-            {{ product?.data.description.length > 32 ? product?.data.description.substring(0,32)+"..." : product?.data.description }}
-          </p>
-          <button type="button " (click)="deleteProduct(product.data.id)" class="btn btn-danger ">Delete</button>
+                    </h5>
+                    <p class="">
+                        {{ product?.data.description.length > 32 ? product?.data.description.substring(0,32)+"..." : product?.data.description }}
+                    </p>
+                    <button type="button " (click)="deleteProduct(product.data.id)" class="btn btn-danger ">Delete</button>
+                </div>
+            </div>
         </div>
-      </div>
+        <!--/.coll-->
     </div>
-    <!--/.coll-->
-  </div>
-  <!--/.row-->
+    <!--/.row-->
 </div>

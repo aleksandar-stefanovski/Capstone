@@ -2,6 +2,7 @@
 using ClicknEat.Contracts.V1.Requests;
 using ClicknEat.Contracts.V1.Responses;
 using ClicknEat.Services;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System;
@@ -15,10 +16,12 @@ namespace ClicknEat.Controllers.V1
     public class IdentityController : Controller
     {
         private readonly IIdentityService _identityService;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public IdentityController(IIdentityService identityService)
+        public IdentityController(IIdentityService identityService, UserManager<IdentityUser> userManager)
         {
             _identityService = identityService;
+            _userManager = userManager;
         }
 
         [HttpPost(ApiRoutes.Identity.Register)]

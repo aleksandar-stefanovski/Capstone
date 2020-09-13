@@ -1,10 +1,10 @@
-<app-header [navbarBrandRouterLink]="['/dashboard']" [fixed]="true" [sidebarToggler]="'lg'" [asideMenuToggler]="'lg'">
+<!-- <app-header [navbarBrandRouterLink]="['/dashboard']" [fixed]="true" [sidebarToggler]="'lg'" [asideMenuToggler]="'lg'">
     <ul class="nav navbar-nav d-md-down-none ">
         <li class="nav-item px-3">
-            <a class="nav-link " href="# ">Dashboard</a>
+            <a class="nav-link " href="#/dashboard ">Dashboard</a>
         </li>
         <li class="nav-item px-3 ">
-            <a class="nav-link " href="# ">Profile</a>
+            <a class="nav-link " href="#/profile ">Profile</a>
         </li>
         <li class="nav-item px-3 ">
             <button (click)="onLogout()" class="nav-link">Logout</button>
@@ -24,7 +24,45 @@
             </div>
         </li>
     </ul>
-</app-header>
+</app-header> -->
+
+<app-header-client class="header-fixed app-header navbar" [navbarBrandRouterLink]="['/dashboard']" [fixed]="true" [sidebarToggler]="'lg'" [asideMenuToggler]="'lg'">
+    <a class="navbar-brand" ng-reflect-router-link="/dashboard" href="#/dashboard">
+        <!--bindings={
+        "ng-reflect-ng-if": "false"
+      }-->
+        <!--bindings={
+        "ng-reflect-ng-if": "true"
+      }-->
+        <div class="navbar-brand-full">🅲 ClicknEat</div>
+        <div class="navbar-brand-minimized">🅲</div>
+
+    </a>
+    <ul class="nav navbar-nav d-md-down-none ">
+        <li class="nav-item px-3">
+            <a class="nav-link " href="#/dashboard ">Dashboard</a>
+        </li>
+        <li class="nav-item px-3 ">
+            <a class="nav-link " href="#/profile ">Profile</a>
+        </li>
+        <li class="nav-item px-3 ">
+            <button (click)="onLogout()" class="nav-link">Logout</button>
+        </li>
+    </ul>
+    <ul class="nav navbar-nav ml-auto ">
+        <li class="nav-item dropdown " dropdown placement="bottom right">
+            <a class="nav-link " data-toggle="dropdown " href="# " role="button " aria-haspopup="true " aria-expanded="false " dropdownToggle (click)="false ">
+                <img src="assets/img/avatars/7.jpg " class="img-avatar " alt="admin@bootstrapmaster.com " />
+            </a>
+            <div class="dropdown-menu dropdown-menu-right " *dropdownMenu aria-labelledby="simple-dropdown ">
+                <div class="dropdown-header text-center "><strong>Settings</strong></div>
+                <div class="divider "></div>
+                <button (click)="onLogout()" class="dropdown-item " href="# "><i class="fa fa-lock "></i> Logout</button>
+            </div>
+        </li>
+    </ul>
+</app-header-client>
+
 <div class="app-body ">
     <app-sidebar p-sidebar #appSidebar [fixed]="true " [display]=" 'lg' " [minimized]="sidebarMinimized " (minimizedChange)="toggleMinimize($event) ">
         <app-sidebar-nav [navItems]="navItems " [perfectScrollbar] [disabled]="appSidebar.minimized "></app-sidebar-nav>
@@ -53,7 +91,7 @@
         </div>
         <!-- /.container-fluid -->
     </main>
-    <app-aside [fixed]="true " [display]="false " [ngClass]=" 'test' ">
+    <!-- <app-aside [fixed]="true " [display]="false " [ngClass]=" 'test' ">
         <tabset>
             <tab>
                 <ng-template tabHeading><i class="cui-cart"></i></ng-template>
@@ -87,9 +125,8 @@
                 </div>
             </tab>
         </tabset>
-    </app-aside>
+    </app-aside> -->
 </div>
 <app-footer>
-    <span><a href="https://coreui.io ">CoreUI</a> &copy; 2018 creativeLabs.</span>
-    <span class="ml-auto ">Powered by <a href="https://coreui.io/angular ">CoreUI for Angular</a></span>
+    <span><a href="#">ClicknEat</a> &copy; 2020 Aleksandar Stefanovski.</span>
 </app-footer>
