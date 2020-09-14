@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 export class DefaultLayoutComponent {
   public sidebarMinimized = false;
   public navItems = navItems;
+  public navbarBrand = 'ClicknEat';
 
   toggleMinimize(e) {
     this.sidebarMinimized = e;

@@ -32,14 +32,5 @@ export const navItems: INavData[] = [
     name: 'Orders',
     url: '/orders',
     icon: 'icon-note',
-  },
-  {
-    title: true,
-    name: 'Profile'
-  },
-  {
-    name: 'Profile',
-    url: '/my-profile',
-    icon: 'icon-user',
   }
 ];

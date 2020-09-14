@@ -1,5 +1,5 @@
 <app-header-client class="header-fixed app-header navbar" [navbarBrandRouterLink]="['/dashboard']" [fixed]="true" [sidebarToggler]="'lg'" [asideMenuToggler]="'lg'">
-    <a class="navbar-brand" ng-reflect-router-link="/dashboard" href="#/dashboard">
+    <a class="navbar-brand2" ng-reflect-router-link="/home" href="#/home">
         <!--bindings={
         "ng-reflect-ng-if": "false"
       }-->
@@ -7,16 +7,13 @@
         "ng-reflect-ng-if": "true"
       }-->
         <div class="navbar-brand-full">🅲 ClicknEat</div>
-        <div class="navbar-brand-minimized">🅲</div>
 
     </a>
     <ul class="nav navbar-nav d-md-down-none ">
         <li class="nav-item px-3">
             <a class="nav-link " href="#/home">Home</a>
         </li>
-        <li class="nav-item px-3 ">
-            <a class="nav-link " href="#/about">About Us</a>
-        </li>
+
         <li class="nav-item px-3 ">
             <button (click)="onLogout()" class="nav-link">{{isLoggedIn}}</button>
         </li>
@@ -63,7 +60,8 @@
         </div>
         <!-- /.container-fluid -->
     </main>
-    <app-aside [fixed]="true " [display]="false " [ngClass]=" 'test' ">
+    <!-- <app-aside [fixed]="true " [display]="false " [ngClass]=" 'test' ">
+
         <div class="list-group list-group-accent ">
             <div class="list-group-item list-group-item-accent-secondary bg-light text-center font-weight-bold text-muted text-uppercase small ">
                 Shopping Cart</div>
@@ -81,7 +79,7 @@
             </div>
 
         </div>
-    </app-aside>
+    </app-aside> -->
 
 </div>
 <app-footer>

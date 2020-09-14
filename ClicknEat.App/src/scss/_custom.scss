@@ -1,3 +1,26 @@
 // Here you can add other styles
 @import "../app/views/dashboard/dashboard.component";
 @import "../app/containers/client-layout/client-header-layout.component";
+.navbar-brand {
+    display: none !important;
+}
+
+.navbar-brand2 {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 155px;
+    height: 55px;
+    padding: 0;
+    margin-right: 0;
+    background-color: transparent;
+}
+
+.navbar-brand2 {
+    padding-top: 0.3359375rem;
+    padding-bottom: 0.3359375rem;
+    margin-right: 1rem;
+    font-size: 1.09375rem;
+    line-height: inherit;
+    white-space: nowrap;
+}
